@@ -37,7 +37,7 @@ class Db {
 				array('EntireName', 'FName', 'MName', 'LName', 'Suffix', 'Team','GP','Min','FG_M','FG_A','FG_Pct','ThreePT_M','ThreePT_A','ThreePT_Pct','FT_M','FT_A','FT_Pct','Rebounds_Off','Rebounds_Def','Rebounds_Tot','Ast','TO','Stl','Blk','PF','PPG'));
 			$results = $sth->fetchAll();
 
-			var_dump($results);
+			return $results;
 		}
 	}
 

@@ -15,9 +15,13 @@ $(document).ready(function() {
 				type: "POST",
 				url: "DbHandler.php",
 				data: { query: query_value },
+				dataType: "HTML",
 				cache: false,
 				success: function(data) {
-					console.log('THIS IS A: ', typeof data, '. HERE IS THE DATA:', data);
+					
+					console.log(data);
+
+					$("div#results").html(data); 
 				}
 			});
 		} return false;    
