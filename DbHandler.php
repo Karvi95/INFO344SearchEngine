@@ -7,6 +7,7 @@ if(isset($_POST['query'])) {
 	$searchterm = trim($_POST['query']);
 	$NBAers = $myDB->search($searchterm);
 
+	$myDB->kill();
 
 if (empty($NBAers)) {
 	echo "<p id='emptyResults'>No Such Player.</p>";	
