@@ -1,0 +1,16 @@
+#video_box{
+    float: left;
+}
+#video_overlays {
+position:absolute;
+float:left;
+    width: 1000px;
+    min-height: 1000px;
+    background-color: #ffffff;
+    z-index: 300000;
+}
+
+#c {
+  width: 100%    !important;
+  height: 500px   !important;
+}
