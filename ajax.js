@@ -18,9 +18,6 @@ $(document).ready(function() {
 				dataType: "HTML",
 				cache: false,
 				success: function(data) {
-					
-					console.log(data);
-
 					$("div#results").html(data); 
 				}
 			});
