@@ -13,68 +13,76 @@ if (empty($NBAers)) {
 	echo "<p id='emptyResults'>No Such Player.</p>";	
 } else {
 		foreach ($NBAers as $NBA) {
-			echo '<table class="table table-bordered">'
-			. '<img src="' . $NBA->getImgURL() . '" alt="Cover">
-				<h1>' . $NBA->getEntireName() . '</h1>' .	
-				'<tr>
-				 	<th colspan="2" id="nonSpace">Team:</th>
-				  	<td colspan="2">' . $NBA->getTeam() . '</td>'. 
-				  	'<th id="blankSpaceBottom"></th>
-				  	<th colspan="2" id="nonSpace">Games Played:</th>
-				  	<td colspan="2" id="leftLine">' . $NBA->getGP() . '</td>' .
-				  	'<th id="blankSpaceBottom"></th>
-				  	<th colspan="2" id="nonSpace">Minutes:</th>
-				  	<td colspan="2" id="leftLine">' . $NBA->getMin() . '</td>' .	
-				'</tr>
-				<tr>
-					<th id="nonSpace">Assists</th>
-				  	<td>' . $NBA->getAst() . '</td>' .
-				  	'<th id="nonSpace">Steals</th>
-				  	<td>' . $NBA->getStl() . '</td>' .
-			  		'<th id="blankSpaceBottom"></th>
-				  	<th id="nonSpace">Field Goals Made</th>
-				  	<td>' . $NBA->getFG_M() . '</td>' .
-			  		'<th id="nonSpace">Free Throws Made</th>
-				  	<td>' . $NBA->getFT_M() . '</td>' .
-			  		'<th id="blankSpaceBottom"></th>
-				  	<th id="nonSpace">Three-Pointers Made</th>
-				  	<td>' . $NBA->getThreePT_M() . '</td>' .
-			  		'<th id="nonSpace">Offensive Rebounds</th>
-				  	<td>' . $NBA->getRebounds_Off() . '</td>' .
-			  		'</tr>
-				 <tr>
-					<th id="nonSpace">Turnovers</th>
-				  	<td>' . $NBA->getTO() . '</td>' .
-			  		'<th id="nonSpace">Blocks</th>
-				  	<td>' . $NBA->getBlk() . '</td>' .
-			  		'<th id="blankSpaceBottom"></th>
-				  	<th id="nonSpace">Field Goals Attempted</th>
-				  	<td>' . $NBA->getFG_A() . '</td>' .
-			  		'<th id="nonSpace">Free Throws Attempted</th>
-				  	<td>' . $NBA->getFT_A() . '</td>' .
-			  		'<th id="blankSpaceBottom"></th>
-				  	<th id="nonSpace">Three-Pointers Attempted</th>
-				  	<td>' . $NBA->getThreePT_A() . '</td>' .
-			  		'<th id="nonSpace">Defensive Rebounds</th>
-				  	<td>' . $NBA->getRebounds_Def() . '</td>' .
-			  		'</tr>
-				 <tr>
-					<th id="nonSpace">Points Per Game</th>
-				  	<td>' . $NBA->getPPG() . '</td>' .
-			  		'<th id="nonSpace">Personal Fouls</th>
-				  	<td>' . $NBA->getPF() . '</td>' .
-			  		'<th></th>
-				  	<th id="nonSpace">Field Goal Pecentage</th>
-				  	<td>' . $NBA->getFG_Pct() . '</td>' .
-			  		'<th id="nonSpace">Free Throws Percentage</th>
-				  	<td>' . $NBA->getFT_Pct() . '</td>' .
-			  		'<th></th>
-				  	<th id="nonSpace">Three-Pointer Percentage</th>
-				  	<td>' . $NBA->getThreePT_Pct() . '</td>' .
-			  	   	'<th id="nonSpace">Total Rebounds</th>
-				  	<td>' . $NBA->getRebouds_Tot() . '</td>' .
-				'</tr>
-			</table>';							
+			echo '<div class="container">
+					<div id="header" style="height:15%;width:100%;">
+					    <div style="float:left">
+					        <img src="' . $NBA->getImgURL() . '" alt="Cover"/>
+					    </div>
+					    <div style="float:right" id="tableness">
+					        <table class="table table-condensed" border="1" width="44" style="margin-left:5%;float:top;"> 
+					            <h2>' . $NBA->getEntireName() . '</h2>' .   
+					            '<tr>
+					                <th colspan="2" id="nonSpace">Team:</th>
+					                <td colspan="2">' . $NBA->getTeam() . '</td>'. 
+					                '<th id="lastSp"></th>
+					                <th colspan="2" id="nonSpace">GP:</th>
+					                <td colspan="2" id="leftLine">' . $NBA->getGP() . '</td>' .
+					                '<th id="lastSp"></th>
+					                <th colspan="2" id="nonSpace">Min:</th>
+					                <td colspan="2" id="leftLine">' . $NBA->getMin() . '</td>' .    
+					            '</tr>
+					            <tr>
+					                <th id="nonSpace">Ast</th>
+					                <td>' . $NBA->getAst() . '</td>' .
+					                '<th id="nonSpace">Stl</th>
+					                <td>' . $NBA->getStl() . '</td>' .
+					                '<th id="blankSpaceBottom"></th>
+					                <th id="nonSpace">FG_M</th>
+					                <td>' . $NBA->getFG_M() . '</td>' .
+					                '<th id="nonSpace">FT_M</th>
+					                <td>' . $NBA->getFT_M() . '</td>' .
+					                '<th id="blankSpaceBottom"></th>
+					                <th id="nonSpace">3PT_M</th>
+					                <td>' . $NBA->getThreePT_M() . '</td>' .
+					                '<th id="nonSpace">Rebounds_Off</th>
+					                <td>' . $NBA->getRebounds_Off() . '</td>' .
+					                '</tr>
+					             <tr>
+					                <th id="nonSpace">TO</th>
+					                <td>' . $NBA->getTO() . '</td>' .
+					                '<th id="nonSpace">Blk</th>
+					                <td>' . $NBA->getBlk() . '</td>' .
+					                '<th id="blankSpaceBottom"></th>
+					                <th id="nonSpace">FG_A</th>
+					                <td>' . $NBA->getFG_A() . '</td>' .
+					                '<th id="nonSpace">FT_A</th>
+					                <td>' . $NBA->getFT_A() . '</td>' .
+					                '<th id="blankSpaceBottom"></th>
+					                <th id="nonSpace">3PT_A</th>
+					                <td>' . $NBA->getThreePT_A() . '</td>' .
+					                '<th id="nonSpace">Rebounds_Def</th>
+					                <td>' . $NBA->getRebounds_Def() . '</td>' .
+					                '</tr>
+					             <tr>
+					                <th id="nonSpace">PPG</th>
+					                <td id="last">' . $NBA->getPPG() . '</td>' .
+					                '<th id="nonSpace">PF</th>
+					                <td>' . $NBA->getPF() . '</td>' .
+					                '<th id="lastSp"></th>
+					                <th id="nonSpace">FG_Pct</th>
+					                <td id="last">' . $NBA->getFG_Pct() . '</td>' .
+					                '<th id="nonSpace">FT_Pct</th>
+					                <td>' . $NBA->getFT_Pct() . '</td>' .
+					                '<th id="lastSp"></th>
+					                <th id="nonSpace">3PT_Pct</th>
+					                <td id="last">' . $NBA->getThreePT_Pct() . '</td>' .
+					                '<th id="nonSpace">Rebouds_Tot</th>
+					                <td id="last">' . $NBA->getRebouds_Tot() . '</td> .
+					            </tr>
+					        </table>
+					    </div>
+					</div>
+				</div>';							
 		}	
 	}
 }

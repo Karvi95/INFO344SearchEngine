@@ -1,8 +1,41 @@
+@import url(https://fonts.googleapis.com/css?family=Arvo);
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
+
+.container{
+	margin-bottom:4em !important;
+}
+
+#results{
+	margin-top: 4em !important;
+}
+
+#title {
+	text-align: center;	
+	color: #CD594A;
+
+	position: absolute;
+    z-index: 2;
+    left: 3em !important;
+    top: 0.5em !important;
+    right: 5em;
+
+    font-size: 4em;
+	font-family: 'Raleway', sans-serif;
+}	
+
+body {
+	background-color: black;
+}
+
 #divSearch {
     position: absolute;
     z-index: 2;
-    left: 5em;
-    top: 1em;
+    left: -40em !important;
+    top: -0.5em !important;
     right: 5em;
     height: 50px;
 
@@ -15,49 +48,83 @@
     text-align: center !important;
     margin-top: 0.01em !important;
     font-size: 8em !important;
+    color: white !important;    
 }
 
 .form-control {
-	width: 40em;
+	width: 30em;
 	display: inline !important;
 	margin-right: 3em !important;
 	margin-left: 6em !important;
-	border: 2px solid #FF0000 !important;
+	border: 2px solid #CD594A !important;
 
 	margin-top: 12em;
 }
 
 .table-bordered {
-	border: 2px solid #FF0000 !important;
+	border: 2px solid #CD594A !important;
 }
 
 #nonSpace {
-	background-color: #FF0000 !important;
-	border-top: 2px solid #FF0000 !important;
-	border-left: 2px solid #FF0000 !important;
-	color: white;
+	border-bottom: 2px solid #CD594A !important;
+	border-top: 2px solid #CD594A !important;
+	border-left: 2px solid #CD594A !important;
+	color: #CD594A;
+}
+
+th {
+	font-family: Arvo !important;
 }
 
 td {
-	border: 2px solid #FF0000 !important;
+	border: 2px solid #CD594A !important;
+	color: white;
+	text-align: right !important;
+	font-family: 'Questrial', sans-serif;
 }
 
 #blankSpaceBottom {
-	border-bottom: 2px solid #FFFFFF !important;
+	border-top:2px solid black !important;
+	border-bottom: 2px solid black !important;
+}
+
+#blankSpaceBottomTop {
+	border-top: 2px black !important;
+	border-bottom: 2px solid black !important;
 }
 
 input::-webkit-input-placeholder {
-color: navy !important;
+color: black !important;
 }
  
 input:-moz-placeholder { /* Firefox 18- */
-color: navy !important;  
+color: black !important;  
 }
  
 input::-moz-placeholder {  /* Firefox 19+ */
-color: navy !important;  
+color: black !important;  
 }
  
 input:-ms-input-placeholder {  
-color:navy !important;  
+color:black !important;  
+}
+
+h2 {
+	color: white;
+	font-family: 'Lato', sans-serif;
+}
+
+#leftLine {
+	text-align: right !important;
+}
+
+#texttosayresults {
+	color: white;
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+}
+
+#lastSp {
+	border-top: 2px solid black !important;
+	border-bottom: 2px solid black !important;
 }

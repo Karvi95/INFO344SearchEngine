@@ -26,17 +26,18 @@ error_reporting(E_ALL);
 	</head>
 	<body>
 	    <div>
+            <h1 id="title">NBA Player Database</h1>
             <canvas id=c></canvas>
 			<form action="searchX5.php" method="POST">
 				<div id="divSearch">
 					<input type="text" placeholder= "Search for a player!" name="searchterm" class="form-control"> <!-- <input type="submit" class="btn btn-danger" value="Search"> -->
 				</div>
 			</form>
-        </div>				
+        </div>
+        <h1 id="texttosayresults">Results:</h1>				
 		<div id="results"></div>
         <div id="wrap_video">
             <div id="video_box">
-                <div id="video_overlays"></div>
                 <div>
                     <video id=v class="bgvid" autoplay="autoplay" muted="muted" preload="auto" loop>
                         <source src="Dunks.webm" type=video/webm>
