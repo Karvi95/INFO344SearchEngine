@@ -71,8 +71,7 @@ namespace AzureConsole
                 }
             }
 
-//          getResults(prefix, current, titlesInTrie, 10);
-            return titlesInTrie;
+          return traverseTrie(pageTitle, current, titlesInTrie); 
         }
         public List<string> traverseTrie(string prefix, TrieNode prefixEnd, List<string> titlesInTrie)
         {
@@ -81,12 +80,20 @@ namespace AzureConsole
                 return titlesInTrie;
             } else
             {
-                if (prefixEnd.isTerminalChar == true)
+                if (prefixEnd.isTerminalChar)
                 {
                     titlesInTrie.Add(prefix);
                 }
+
+                if (prefixEnd.children != null)
+                {
+                    foreach (KeyValuePair<char, TrieNode> child in prefixEnd.children)
+                    {
+                        titlesInTrie = traverseTrie(prefix + child.Key, child.Value, titlesInTrie);
+                    }
+                }
+                return titlesInTrie;
             }
-            return null;
         }
     }
 }

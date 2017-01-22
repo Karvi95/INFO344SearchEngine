@@ -23,6 +23,12 @@ namespace AzureConsole
                     
                 }
 
+                List<string> output = myTrie.getPrefix("C");
+                foreach (string s in output)
+                {
+                    System.Console.WriteLine(s);
+                }
+                System.Console.ReadLine();
                 //string outputCat = myTrie.getPrefix("Cat");
                 //System.Console.WriteLine(outputCat);
             }
