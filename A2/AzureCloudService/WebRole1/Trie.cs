@@ -9,7 +9,6 @@ namespace WebRole1
     {
         public TrieNode root { get; private set; }
         private readonly int _capacity = 20;
-
         public Trie()
         {
             root = new TrieNode();
@@ -25,40 +24,60 @@ namespace WebRole1
 
         public void rebalance(string pageTitle, TrieNode current)
         {
+            // Default behavior is to add words to the list as soon as possible.
             current.partialWords.Add(pageTitle);
-            
-            if (pageTitle.Length == 1)
-            {
-                current.isTerminalChar = true;
-            }
 
+            // But should potentially build standard Trie if capacity is exceeded.
             if (current.partialWords.Count > _capacity)
             {
+                // Words that are one letter long should be marked.
+                if (pageTitle.Length == 1)
+                {
+                    current.isTerminalChar = true;
+                }
+
+                // Begin constructing standard trie out of all the previously inserted words
+                // in leaf node's list.
                 foreach (string s in current.partialWords)
                 {
-            
+
+                    // Obtain first letter and initialize a node to potentially associate
+                    // said letter to node.
                     char letter = s[0];
                     TrieNode node;
 
-    
-                    if (current.children.ContainsKey(letter))
+                    // Create Dictionary if none exists.
+                    if (current.children == null)
                     {
-    
-                        node = current.children[letter];
-    
+                        current.children = new Dictionary<char, TrieNode>();
+
                     }
-                    else
+
+                    // If dictionary exists but letter is not a key,
+                    // make a new node an associate.
+                    if (current.children != null && !(current.children.ContainsKey(letter)))
                     {
-    
                         node = new TrieNode();
                         current.children.Add(letter, node);
-    
                     }
+
+                    // Otherwise, traverse to node where letter exists.
+                    else
+                    {
+                        node = current.children[letter];
+
+                    }
+
+                    // Cannot substring a string of length one; will receive C#'s
+                    // version of OutOfBounds Exception, so only rebalance when string is
+                    // sufficiently long.
                     if (s.Length != 1)
                     {
                         rebalance(s.Substring(1, s.Length - 1), node);
                     }
                 }
+
+                // Clear all words from this level because they've been inserted as nodes.
                 current.partialWords.Clear();
             }
         }
@@ -76,19 +95,45 @@ namespace WebRole1
                 return titlesInTrie;
             }
 
-            // Traverse input letter-by-letter as long as the current child contains that letter
+            // For as many characters there are in the string,
             for (int index = 0; index < pageTitle.Length; index++)
             {
                 char letter = pageTitle[index];
-                if (current.children.ContainsKey(letter))
+
+                // and only if list of strings at this node is empty,
+                if (!current.partialWords.Any())
                 {
-                    current = current.children[letter];
-                    potentialPrefix += letter;
+                    // traverse input letter-by-letter as long as the current child contains that letter.
+                    if (current.children.ContainsKey(letter))
+                    {
+                        current = current.children[letter];
+                        potentialPrefix += letter;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
+
+                // Otherwise; when list of strings is present, append partialWord to the 
+                // potential prefix, and, 
                 else
                 {
-                    break;
+                    foreach (string s in current.partialWords)
+                    {
+                        string completeWordInList = potentialPrefix += s;
+
+                        // if any of the concatenated results match the input,
+                        // ??? (return a List of one element long? There shouldn't be anymore traversing to do because current.children is null, right?).
+                        if (completeWordInList == pageTitle)
+                        {
+                            List<string> oneResult = new List<string>();
+                            oneResult.Add(completeWordInList);
+                            return oneResult;
+                        }
+                    }
                 }
+
             }
 
             // Submit node of the ending character in prefix to helper 
