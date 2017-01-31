@@ -23,43 +23,36 @@ namespace WebRole1
             }
         }
 
-        public string rebalance(string pageTitle, TrieNode current)
+        public void rebalance(string pageTitle, TrieNode current)
         {
             current.partialWords.Add(pageTitle);
-            //if passed in word's length is 1, then mark node as end of word
+            
             if (pageTitle.Length == 1)
             {
                 current.isTerminalChar = true;
-                return "done";
             }
 
-            if (current.partialWords.Count <= _capacity)
+            if (current.partialWords.Count > _capacity)
             {
-                return "done";
-            }
-            else
-            {
-                //List<String> tempList = current.HybridList;
-                //current.HybridList.Clear();
                 foreach (string s in current.partialWords)
                 {
-                    //get first letter in item
+            
                     char letter = s[0];
                     TrieNode node;
 
-                    //check that first letter is in the dictionary key
+    
                     if (current.children.ContainsKey(letter))
                     {
-                        //if it does, pass that word into that node
+    
                         node = current.children[letter];
-                        //return rearrange(node, tempWord);
+    
                     }
                     else
                     {
-                        //if it doesn't, create a new node with that letter and add the rest of the letters into the hybrid
+    
                         node = new TrieNode();
                         current.children.Add(letter, node);
-                        //String test = tempWord.Substring(1, tempWord.Length - 1);
+    
                     }
                     if (s.Length != 1)
                     {
@@ -67,7 +60,6 @@ namespace WebRole1
                     }
                 }
                 current.partialWords.Clear();
-                return "done";
             }
         }
 
