@@ -9,13 +9,13 @@ namespace WebRole1
     {
         public Dictionary<char, TrieNode> children { get; set; }
         public bool isTerminalChar { get; set; }
-        public List<string> hybridList { get; set; }
+        public List<string> partialWords { get; set; }
 
         public TrieNode()
         {
             this.children = null;
             this.isTerminalChar = false;
-            this.hybridList = new List<string>();
+            this.partialWords = new List<string>();
         }
     }
 }

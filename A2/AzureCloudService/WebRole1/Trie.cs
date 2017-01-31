@@ -8,35 +8,67 @@ namespace WebRole1
     class Trie
     {
         public TrieNode root { get; private set; }
+        private readonly int _capacity = 20;
 
         public Trie()
         {
             root = new TrieNode();
         }
 
-        public void insert(string pageTitle)
+        public string insert(string pageTitle)
         {
-            TrieNode current = root;
-            for (int i = 0; i < pageTitle.Length; i++)
+            if (pageTitle == null || pageTitle.Length == 0)
             {
-                if (current.children == null)
+                return "can't do empty";
+            }
+            return rearrange(pageTitle, root);
+        }
+
+        public string rearrange(string pageTitle, TrieNode current)
+        {
+            current.partialWords.Add(pageTitle);
+            //if passed in word's length is 1, then mark node as end of word
+            if (pageTitle.Length == 1)
+            {
+                current.isTerminalChar = true;
+                return "done";
+            }
+
+            if (current.partialWords.Count <= _capacity)
+            {
+                return "done";
+            }
+            else
+            {
+                //List<String> tempList = current.HybridList;
+                //current.HybridList.Clear();
+                foreach (string s in current.partialWords)
                 {
-                    current.children = new Dictionary<char, TrieNode>();
+                    //get first letter in item
+                    char letter = s[0];
+                    TrieNode node;
+
+                    //check that first letter is in the dictionary key
+                    if (current.children.ContainsKey(letter))
+                    {
+                        //if it does, pass that word into that node
+                        node = current.children[letter];
+                        //return rearrange(node, tempWord);
+                    }
+                    else
+                    {
+                        //if it doesn't, create a new node with that letter and add the rest of the letters into the hybrid
+                        node = new TrieNode();
+                        current.children.Add(letter, node);
+                        //String test = tempWord.Substring(1, tempWord.Length - 1);
+                    }
+                    if (s.Length != 1)
+                    {
+                        rearrange(s.Substring(1, s.Length - 1), node);
+                    }
                 }
-
-                char letter = pageTitle[i];
-
-                if (!current.children.ContainsKey(letter))
-                {
-                    current.children.Add(letter, new TrieNode());
-                }
-
-                current = current.children[letter];
-
-                if (i == pageTitle.Length - 1)
-                {
-                    current.isTerminalChar = true;
-                }
+                current.partialWords.Clear();
+                return "done";
             }
         }
 
