@@ -103,22 +103,5 @@ namespace WebRole1
             }
             return new JavaScriptSerializer().Serialize(tenItems);
         }
-
-        //public string formatResults(List<string> tenItems)
-        //{
-        //    // format as table
-        //    StringBuilder htmlStr = new StringBuilder("");
-        //    htmlStr.Append("<table border='1' cellpadding='3'>");
-
-        //    foreach (var item in tenItems)
-        //    {
-        //        htmlStr.Append("<tr>");
-        //        htmlStr.Append("<td width='25px'>" + item + "</td><tr>");
-        //        htmlStr.Append("</tr>");
-        //    }
-
-
-        //    return null;
-        //}
     }
 }

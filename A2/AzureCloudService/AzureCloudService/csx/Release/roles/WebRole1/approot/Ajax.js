@@ -1,6 +1,6 @@
 ﻿// Start Ready
 $(document).ready(function () {
-
+    
     // Canvas Click Focus
     $('').click(function () {
         $('input.form-control').focus();
@@ -11,7 +11,8 @@ $(document).ready(function () {
         search();
     });
 
-
+    //a2info344.cloudapp.net
+    //localhost:5731
     // Live Search
     // On Search Submit and Get Results
     function search() {
@@ -23,12 +24,21 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                var data = JSON.parse(msg.d);
                 var outer = $("<div></div>");
                 $("#jsonDiv").html(outer);
-                for (var i = 0; i < data.length; i++) {
-                    var div = $("<div>").text(data[i]);
+                if (input == "")
+                {
+                    var div = $("<div>").text("");
                     outer.append(div);
+                } else if (msg.d == "No results found.") {
+                    var div = $("<div>").text("No results found.");
+                    outer.append(div);
+                } else {
+                    var data = JSON.parse(msg.d);
+                    for (var i = 0; i < data.length; i++) {
+                        var div = $("<div>").text(data[i]);
+                        outer.append(div);
+                    }
                 }
             },
             error: function (msg) {
