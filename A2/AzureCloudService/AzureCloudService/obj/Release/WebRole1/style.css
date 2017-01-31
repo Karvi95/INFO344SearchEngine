@@ -1,12 +1,49 @@
-﻿#divSearch {
-    position: absolute;
-    z-index: 2;
-    left: -40em !important;
-    top: -0.5em !important;
-    right: 5em;
-    height: 50px;
+﻿#titleForm {
+    margin-top: 6em !important;
+}
 
-    text-align: center;
-   	margin-right: 6em !important;
-	margin-left: 0.25em !important;
+#Subheading{
+	padding-top: -2em;
+	padding-left: 31.4em;
+	font-size: 1.3em;
+}
+
+#textbox {
+    width: 32em;
+}
+
+.form-control {
+	display: inline-block !important;
+}
+
+#submitButton {
+	margin-left: 1em;
+}
+
+#logo {
+	height: 17em;
+	margin-top: 2em;
+	margin-left: 35em;
+	margin-right: 35em;
+
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+#parodyHeader{
+	padding-left: 40em;
+	margin-bottom: -2em;
+}
+
+.firstPart{
+	display:inline-block;
+}
+
+.secondPart{
+	display:inline-block;
+	font-size: 2em !important;
 }

@@ -26,7 +26,7 @@ $(document).ready(function () {
             success: function (msg) {
                 var outer = $("<div></div>");
                 $("#jsonDiv").html(outer);
-                if (input == "")
+                if (input === "")
                 {
                     var div = $("<div>").text("");
                     outer.append(div);
@@ -46,22 +46,4 @@ $(document).ready(function () {
             }
         });
     }
-    
-    /*$('body').on("keyup", "input[name='searchterm']", function (e) {
-        // Set Timeout
-        clearTimeout($.data(this, 'timer'));
-
-        // Set Search String
-        var search_string = $(this).val();
-
-        // Do Search
-        if (search_string == '') {
-            $("h1#texttosayresults").fadeOut();
-            $("div#results").fadeOut();
-        } else {
-            $("h1#texttosayresults").fadeIn();
-            $("div#results").fadeIn();
-            $(this).data('timer', setTimeout(search, 100));
-        };
-    }) */
 });

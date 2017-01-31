@@ -16,8 +16,14 @@
     <script src="Ajax.js"></script>
 </head>
 <body>
-    <input type="text" placeholder="Enter a Title!" id="textbox" name="searchterm">
-    <input type="submit" id="btn" value="Search">
-    <div id="jsonDiv"></div> 
+    <div id="parodyHeader"><h1 class="firstPart">A</h1><h2 class="secondPart">IDEPIKI</h2><h1 class="firstPart">W</h1></div>
+    <h2 id="Subheading">Article Searcher</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" transform="scale(-1,1)" id="logo" alignment="center"/>
+    <form id="titleForm" align="center">
+            <input type="text" placeholder="Enter a Wikipedia Article Title!" id="textbox" name="searchterm" class="form-control">
+            <input type="submit" id="submitButton" class="btn btn-default" value="Search">
+    </form>
+    <div id="jsonDiv"></div>
+
 </body>
 </html>
