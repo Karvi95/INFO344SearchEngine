@@ -15,16 +15,15 @@ namespace WebRole1
             root = new TrieNode();
         }
 
-        public string insert(string pageTitle)
+        public void insert(string pageTitle)
         {
-            if (pageTitle == null || pageTitle.Length == 0)
+            if ((pageTitle != null) && (pageTitle.Length != 0))
             {
-                return "can't do empty";
+                rebalance(pageTitle, root);
             }
-            return rearrange(pageTitle, root);
         }
 
-        public string rearrange(string pageTitle, TrieNode current)
+        public string rebalance(string pageTitle, TrieNode current)
         {
             current.partialWords.Add(pageTitle);
             //if passed in word's length is 1, then mark node as end of word
@@ -64,7 +63,7 @@ namespace WebRole1
                     }
                     if (s.Length != 1)
                     {
-                        rearrange(s.Substring(1, s.Length - 1), node);
+                        rebalance(s.Substring(1, s.Length - 1), node);
                     }
                 }
                 current.partialWords.Clear();
