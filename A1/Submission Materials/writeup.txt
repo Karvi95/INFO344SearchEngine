@@ -1,0 +1,25 @@
+---AWS Setup---
+-Section One: EC2
+The first thing I had to do was to set up an EC2 instance to host my website. Our class was required to use the Elastic Compute Cloud in Amazon Webservices to accomplish this task. This was done by following the instructions in the creation wizard with the following settings: I chose a micro-instance to not be billed, selected the SUSE Linux AMI virtual monitoring, enabled CloudWatch detailed monitoring and downloaded the key-value pair created specific for this assignment. To ensure that the appropriate network protocols (HTTP; to transmit messages and perform allowed actions on webservers and SFTP; to securely transfer files) were able to be performed on this instance, I configured Inbound sercurity settings to allow all (0.0.0.0/0) traffic on Port 80 and my IP on Port 22. I then SSHd into the EC2 instance using the .pem file to install the remaining elements of the LAMP architecture on that machine, Apache, MySQL and PHP. Next, I downloaded Filezilla, connected to the EC2 instance (ensuring to use 'ec2-user' as the username as opposed to 'root'), and changed the permissions using chmod so that I could transfer files over. It was then time to begin section two.
+
+-Section Two: RDS.
+The first thing I had to do for this section was to set up an RDS instance. Our class was required to use the Relational Database Service in Amazon Webservices to accomplish this task. This was done by following the instructions in the creation wizard with the following settings: I chose a micro-instance to not be charged, created a MySQL Database, selected 20GB of storage and Single-Zone Availability; this was not a production Database. I once again configured the security groups: setting my IP as the CIDR: a more optimal method for IP allocation, routing, and management. It was then time to ensure that EC2 can recieve data from the RDS.
+
+-Section Three: EC2 talking to RDS
+I changed the security group settings to allow some new Inbound rules: My EC2's Security Groups would allow the TCP protocol on Port 3306 from my RDS security Group ID on MySQL/Aurora and my RDS Security Group would allow the TCP protocol on Port 3306 from my IP on MySQL/Aurora. It was then time to properly begin the assignment: my first task was to load the data to the RDS using a client. I chose MySQL Workbench as I've had experience with it before.
+
+---Assignment Proper---
+-Section Four: Loading Raw Data to RDS
+Before I could load in the data, I had to sanitize the raw file: '2015-2016.nba.stats.csv' by removing unnecessary rows, splitting the names and removing trailing spaces in the data to conform to Relational Theory Best Practices. I then connected to MySQL Workbench using the RDS endpoint, created a database and imported data as a table, ensuring that all columns were brought in as the appropriate data type. 
+
+-Section Five: Coding Part 1 - WebForm
+With that accomplished, I could finally begin coding by creating a simple webform with input and search button and a div to display the results. I now needed to create the functionality to take user input from the textbox and use it to query the database in a way that conformed to OOP principles.
+
+-Section Five: Coding Part 2 - Db Class
+I created a database class which would have a connect to the data base using PDO, query using user-input and then fetchAll records that matched. Because I realized that I wanted to have each row be an object, I set the 'PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE' so that the constructor could be called before the PDO assigns the object properties, passing in an array of the column names as these would be the same as the BBallPlayer's fields. I then returned an array of all of the resultant BBallPlayer objects and created a kill() function to terminate the connection.
+
+-Section Five: Coding Part 3 - BBallPlayer Class
+This class had a constructor with all the column names, getters to return those fields. 
+
+-Section Five: Coding Part 4 - Displaying Output
+Finally in that div, I formatted a table in a (hopefully) aesthetically pleasing way and intermitedly called <?php ?> to populate each table with each players' appropriate information for each of the player objects returned in the array.
