@@ -25,7 +25,7 @@ namespace WebRole1
     public class myWebService : System.Web.Services.WebService
     {
 
-        private static Trie myTrie = new Trie();
+        private static Trie myTrie;
         private string myPath = System.Web.HttpContext.Current.Server.MapPath(@"/output.txt");
 
 
@@ -60,6 +60,7 @@ namespace WebRole1
         [WebMethod]
         public string buildTrie()
         {
+            myTrie = new Trie();
             int InsertionCounter = 0;
             PerformanceCounter MemCounter = new PerformanceCounter("Memory", "Available MBytes");
 

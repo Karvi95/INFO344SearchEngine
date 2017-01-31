@@ -7,7 +7,7 @@ namespace WebRole1
 {
     class Trie
     {
-        private TrieNode root { get;  set; }
+        public TrieNode root { get; private set; }
 
         public Trie()
         {
