@@ -1,6 +1,0 @@
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\bin\Debug\AzureConsole.exe.config
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\bin\Debug\AzureConsole.exe
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\bin\Debug\AzureConsole.pdb
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\obj\Debug\AzureConsole.exe
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\obj\Debug\AzureConsole.pdb
-C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\QuerySuggestion\AzureConsole\obj\Debug\AzureConsole.csprojResolveAssemblyReference.cache

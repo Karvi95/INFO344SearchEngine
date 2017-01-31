@@ -1,0 +1,12 @@
+﻿#divSearch {
+    position: absolute;
+    z-index: 2;
+    left: -40em !important;
+    top: -0.5em !important;
+    right: 5em;
+    height: 50px;
+
+    text-align: center;
+   	margin-right: 6em !important;
+	margin-left: 0.25em !important;
+}
