@@ -24,13 +24,11 @@ namespace WebRole1
 
         public void rebalance(string pageTitle, TrieNode current)
         {
-
             // Default behavior is to add words to the list as soon as possible.
             current.partialWords.Add(pageTitle);
 
-
             // But should potentially build standard Trie if capacity is exceeded.
-            if (current.partialWords.Count > _capacity || current.children != null)
+            if (current.partialWords.Count > _capacity)
             {
 
                 // Begin constructing standard trie out of all the previously inserted words
@@ -81,7 +79,6 @@ namespace WebRole1
                 // Clear all words from this level because they've been inserted as nodes.
                 current.partialWords.Clear();
             }
-
         }
 
         public List<string> getPrefix(string pageTitle)
@@ -91,7 +88,7 @@ namespace WebRole1
             string potentialPrefix = "";
             List<string> titlesInTrie = new List<string>();
 
-            if (current.partialWords.Count > 0)
+            if (current.partialWords.Count > 0 || current.children == null)
             {
                 foreach (string inList in root.partialWords)
                 {
@@ -100,7 +97,7 @@ namespace WebRole1
                         titlesInTrie.Add(inList);
                     }
                 }
-                return titlesInTrie;
+                //return titlesInTrie;
             }
 
             // Immediately return an empty list if input was an empty string. 
