@@ -9,6 +9,7 @@ namespace WebRole1
     {
         public TrieNode root { get; private set; }
         private readonly int _capacity = 20;
+        private readonly int _returnAmount = 10;
         public Trie()
         {
             root = new TrieNode();
@@ -16,19 +17,21 @@ namespace WebRole1
 
         public void insert(string pageTitle)
         {
+            // Can't insert null or zero page title.
             if ((pageTitle != null) && (pageTitle.Length != 0))
             {
+                // Call Helper Method
                 rebalance(pageTitle, root);
             }
         }
 
-        public void rebalance(string pageTitle, TrieNode current)
+        private void rebalance(string pageTitle, TrieNode current)
         {
             // Default behavior is to add words to the list as soon as possible.
             current.partialWords.Add(pageTitle);
 
             // But should potentially build standard Trie if capacity is exceeded.
-            if (current.partialWords.Count > _capacity)
+            if (current.partialWords.Count > _capacity || current.children != null)
             {
 
                 // Begin constructing standard trie out of all the previously inserted words
@@ -88,11 +91,12 @@ namespace WebRole1
             string potentialPrefix = "";
             List<string> titlesInTrie = new List<string>();
 
+            // Perform linearSearch on root.
             if (current.partialWords.Count > 0 || current.children == null)
             {
                 foreach (string inList in root.partialWords)
                 {
-                    if (inList.StartsWith(pageTitle) && titlesInTrie.Count != 10)
+                    if (inList.StartsWith(pageTitle) && titlesInTrie.Count != _returnAmount)
                     {
                         titlesInTrie.Add(inList);
                     }
@@ -118,7 +122,7 @@ namespace WebRole1
                     potentialPrefix += letter;
 
                     // and only if list of strings at this node is empty,
-                    if (!current.partialWords.Any())
+                    if (!current.partialWords.Any() && current.children == null)
                     {
                         continue;
                     }
@@ -136,7 +140,7 @@ namespace WebRole1
 
             // Submit node of the ending character in prefix to helper 
             // function along with input and the empty list to actually 
-            // traverse the trie and obtain 10 results.
+            // traverse the trie and obtain _returnAmount results.
             if (potentialPrefix == pageTitle)
             {
                 titlesInTrie = traverseTrie(pageTitle, current, titlesInTrie);
@@ -144,17 +148,18 @@ namespace WebRole1
             return titlesInTrie;
         }
 
-        public List<string> linearSearch(string prefix, TrieNode current, List<string> titlesInTrie, string pageTitle)
+        private List<string> linearSearch(string prefix, TrieNode current, List<string> titlesInTrie, string pageTitle)
         {
-
             // Iterate through strings in partial words list
             foreach (string inList in current.partialWords)
             {
+                // If potential prefix with the word in the list starts with
+                // input, add. Break if list exceeds allotted amount.
                 if ((prefix + inList).StartsWith(pageTitle))
                 {
                     titlesInTrie.Add(prefix + inList);
 
-                    if (titlesInTrie.Count == 10)
+                    if (titlesInTrie.Count == _returnAmount)
                     {
                         break;
                     }
@@ -163,10 +168,10 @@ namespace WebRole1
             return titlesInTrie;
         }
 
-        public List<string> traverseTrie(string prefix, TrieNode prefixEnd, List<string> titlesInTrie)
+        private List<string> traverseTrie(string prefix, TrieNode prefixEnd, List<string> titlesInTrie)
         {
-            // Base case; if there are 10 titles return immediately.
-            if (titlesInTrie.Count == 10)
+            // Base case; if there are _returnAmount titles return immediately.
+            if (titlesInTrie.Count == _returnAmount)
             {
                 return titlesInTrie;
             }
@@ -175,17 +180,19 @@ namespace WebRole1
                 // If this is a complete word, need to add title to list.
                 if (prefixEnd.isTerminalChar)
                 {
-                    if (titlesInTrie.Count < 10)
+                    if (titlesInTrie.Count < _returnAmount)
                     {
                         titlesInTrie.Add(prefix);
                     }
                 }
 
+                // If items in list, iterate over them. If resulting list is greater than 
+                // amount returned.
                 if (prefixEnd.partialWords.Count > 0)
                 {
                     titlesInTrie = linearSearch(prefix, prefixEnd, titlesInTrie, prefix);
 
-                    if (titlesInTrie.Count == 10)
+                    if (titlesInTrie.Count == _returnAmount)
                     {
                         return titlesInTrie;
                     }
