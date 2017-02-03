@@ -25,7 +25,7 @@ namespace WebRole1
     public class myWebService : System.Web.Services.WebService
     {
 
-        private static Trie myTrie;
+        private static Trie myTrie = new Trie();
         private string myPath = System.Web.HttpContext.Current.Server.MapPath(@"/output.txt");
 
 
@@ -60,7 +60,6 @@ namespace WebRole1
         [WebMethod]
         public string buildTrie()
         {
-            myTrie = new Trie();
             int InsertionCounter = 0;
             PerformanceCounter MemCounter = new PerformanceCounter("Memory", "Available MBytes");
 
@@ -85,6 +84,12 @@ namespace WebRole1
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string searchTrie(string queryValue)
         {
+            if (myTrie == null)
+            {
+                myTrie = new Trie();
+                this.buildTrie();
+            }
+
             List<string> tenItems = myTrie.getPrefix(queryValue.ToLower().Trim().Replace(' ', '_'));
 
             // Output processing to replace underscores with spaces and other stuff. 

@@ -147,3 +147,4 @@ C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\WebRo
 C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\WebRole1\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\WebRole1\obj\Debug\WebRole1.dll
 C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\WebRole1\obj\Debug\WebRole1.pdb
+C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\WebRole1\obj\Debug\WebRole1.csprojResolveAssemblyReference.cache

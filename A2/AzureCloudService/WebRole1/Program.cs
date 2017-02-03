@@ -15,7 +15,7 @@ namespace WebRole1
     {
         static void Main(string[] args)
         {
-            using (StreamReader sr = new StreamReader("C:\\Users\\ReppuVanWinkle\\Downloads\\small.txt"))
+            using (StreamReader sr = new StreamReader("C:\\Users\\ReppuVanWinkle\\Downloads\\output.txt"))
             {
                 string line;
                 // Read and display lines from the file until the end of 
