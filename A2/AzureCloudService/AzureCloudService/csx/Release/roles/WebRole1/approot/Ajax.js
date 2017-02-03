@@ -11,15 +11,13 @@ $(document).ready(function () {
         search();
     });
 
-    //a2info344.cloudapp.net
-    //localhost:5731
     // Live Search
     // On Search Submit and Get Results
     function search() {
         var input = $("input[name='searchterm']").val();
         $.ajax({
             type: "POST",
-            url: "http://localhost:5731/myWebService.asmx/searchTrie",
+            url: "http://a2info344.cloudapp.net/myWebService.asmx/searchTrie",
             data: JSON.stringify({ queryValue: input }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",

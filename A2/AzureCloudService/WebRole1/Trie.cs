@@ -30,7 +30,8 @@ namespace WebRole1
             // Default behavior is to add words to the list as soon as possible.
             current.partialWords.Add(pageTitle);
 
-            // But should potentially build standard Trie if capacity is exceeded.
+            // But should potentially build standard Trie if capacity is exceeded
+            // OR if there are children.
             if (current.partialWords.Count > _capacity || current.children != null)
             {
 
@@ -96,7 +97,7 @@ namespace WebRole1
             {
                 foreach (string inList in root.partialWords)
                 {
-                    if (inList.StartsWith(pageTitle) && titlesInTrie.Count != _returnAmount)
+                    if (inList.StartsWith(pageTitle) && titlesInTrie.Count != _returnAmount && !titlesInTrie.Contains(inList))
                     {
                         titlesInTrie.Add(inList);
                     }
@@ -155,7 +156,7 @@ namespace WebRole1
             {
                 // If potential prefix with the word in the list starts with
                 // input, add. Break if list exceeds allotted amount.
-                if ((prefix + inList).StartsWith(pageTitle))
+                if ((prefix + inList).StartsWith(pageTitle) && !titlesInTrie.Contains(prefix + inList))
                 {
                     titlesInTrie.Add(prefix + inList);
 
@@ -180,7 +181,7 @@ namespace WebRole1
                 // If this is a complete word, need to add title to list.
                 if (prefixEnd.isTerminalChar)
                 {
-                    if (titlesInTrie.Count < _returnAmount)
+                    if (titlesInTrie.Count < _returnAmount && !titlesInTrie.Contains(prefix))
                     {
                         titlesInTrie.Add(prefix);
                     }
