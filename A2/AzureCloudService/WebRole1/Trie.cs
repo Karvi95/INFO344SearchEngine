@@ -7,7 +7,7 @@ namespace WebRole1
 {
     class Trie
     {
-        public TrieNode root { get; private set; }
+        private TrieNode root { get; set; }
         private readonly int _capacity = 20;
         private readonly int _returnAmount = 10;
         public Trie()

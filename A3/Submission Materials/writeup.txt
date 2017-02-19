@@ -1,0 +1,29 @@
+---Azure Setup---
+-Section 0: Data Cleaning
+Frustratingly, the wikipedia dump includes not only random punctuation marks in the page titles, but also denotes (spaces) with (underscores). Thus, it was imperative to run the following two grep commands: 
+						grep -v '[^a-zA-Z_]' enwiki-20170101-all-titles-in-ns0 > output.txt
+						grep -rl  '_' output.txt | xargs sed -i 's/_/ /g
+the first one searchs the file for all non punctuation, except for underscores, marks and outputs them to a text file and then the second one searches for the remaining underscores and replaces thme with spaces. 
+-Section 1: Creating Storage.
+Once the data was processed, it was time to store said file in a BinaryLargeOBject or BLOB. I created the BLOB with LRS, a container, and in my WebConfig would later copy and paste it the connection String.
+
+---Trie---
+-Section 1: Constructing Trie
+I had constructed a Trie when preparing for interviews in Java so I was able to recall my knowledge of that implementation and adapt what we learned in class (for example, the auto property unique to C#) to write up the TrieNode, Trie constructor and insert method which were then validated with these resources: https://leetcode.com/articles/implement-trie-prefix-tree/ and https://www.youtube.com/watch?v=AXjmTQ8LEoI .
+-Section 2: Retrieving 10 results from Trie
+This was very difficult. The first resource above gave me a hint; I was to find the prefix of the user input string first before I returned any matches at all. Secondly, I used the hint given in class to adapt the Depth-First-Search pattern. My thought process is included in the comments.
+
+---WebService---
+-Section 0: Setup
+I created a new project after downloading the AzureSDK: it was a AzureCloudService. Because we need to run this web service on the cloud, I added a WebRole to the project.
+-Section 1: Creating WebService.asmx
+I added another group of tags to the WebConfig; these where the HTTP Get and Post requests. Then I could start on three Web Methods. The first was to download the file from the blob so that the Trie could read it; I used Azure's native CloudManager Objects, after I had installed them using NuGet Package Manager console. Next I had to build the Trie in a specific way to not use up too much memory at a time; I inserted 1000 lines each time and ensured that I had at least 20 MB of RAM left using PerformanceCounters.
+Lastly, I had to create the searchTrie Method: this was simply calling getPrefix on myTrie and returning a serialized list of Strings that start with the prefix. 
+-Section 2: Preserving the Service
+I published this project and recieved a new type of url: it was a .cloudapp.net. I used an external service, called UptimeRobot, that I found on Google to regularly search two strings: "Apple" and "Balloon" at five and twenty minute intervals to preserve the already-built trie: express a good user-experience.
+
+---Ajax---
+Using hints from the in-class assignment, I adapted the code to post to the appropriate method with the appropriate input: searchTrie and queryValue respectively. Once I receive output, I parse the json object to display the results as divs on the front end.
+
+---Front End---
+As a bit of fun; I reflected the wikipedia logo and set the header to the flipped version of the eponymous site: aidepikiw so as to not to get sued ;) . I also did some minor formatting.

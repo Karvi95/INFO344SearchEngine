@@ -1,0 +1,2 @@
+- "URL to your Azure instance hosting this website": http://a2info344.cloudapp.net/
+- "URL to your github repro": https://github.com/Karvi95/INFO344SearchEngine (master and/or secondEx branch)
