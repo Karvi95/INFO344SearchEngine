@@ -20,14 +20,13 @@ namespace CrawlerLibrary
     {
         private readonly DateTime earliestDate;
         private HashSet<string> disalloweds;
-        private HashSet<string> uniqueUrls;
         private HashSet<string> visited;
 
         public WebCrawler()
         {
             earliestDate = new DateTime(2017, 2, 10);
             disalloweds = new HashSet<string>();
-            uniqueUrls = new HashSet<string>();
+            visited = new HashSet<string>();
         }
 
         public void Initialize(StorageMaster myStorageMaster, string robotsDotTXT)
@@ -80,13 +79,11 @@ namespace CrawlerLibrary
             {
                 XmlDocument xDoc = new XmlDocument();
 
-                CloudQueue xmlsQueue = myStorageMaster.GetXMLsQueue();
-                CloudQueueMessage unloadXML = xmlsQueue.GetMessage();
+                CloudQueueMessage unloadXML = myStorageMaster.GetXMLsQueue().GetMessage();
                 string urlAsString = unloadXML.AsString;
 
                 try
                 {
-
                     xDoc.Load(urlAsString);
                     //xDoc.Load(xmlsList[0]);
                     string xml = xDoc.InnerXml;
@@ -102,7 +99,7 @@ namespace CrawlerLibrary
                             if (robotsDotTXT == StorageMaster._CNNRobotsTXT && xreader.ReadToFollowing("lastmod"))
                             {
                                 urlDate = DateTime.Parse(xreader.ReadElementContentAsString());
-                                validDateCheck = (urlDate != null || urlDate.AddMonths(2).CompareTo(DateTime.Now) >= 0) ? true : false;
+                                validDateCheck = (urlDate == null || urlDate.AddMonths(2).CompareTo(DateTime.Now) >= 0) ? true : false;
 
                                 if (validDateCheck)
                                 {
@@ -114,9 +111,9 @@ namespace CrawlerLibrary
                                     }
                                     else if (content.Contains("cnn.com"))
                                     {
-                                        if (!uniqueUrls.Contains(content))
+                                        if (!visited.Contains(content))
                                         {
-                                            uniqueUrls.Add(content);
+                                            visited.Add(content);
                                             myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
                                             Debug.WriteLine("Loaded " + content);
                                         }
@@ -125,9 +122,9 @@ namespace CrawlerLibrary
                             }
                             else if (content.Contains("bleacherreport"))
                             {
-                                if (!uniqueUrls.Contains(content))
+                                if (!visited.Contains(content))
                                 {
-                                    uniqueUrls.Add(content);
+                                    visited.Add(content);
                                     myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
                                     Debug.WriteLine("Loaded " + content);
                                 }
@@ -147,7 +144,7 @@ namespace CrawlerLibrary
                     TableOperation errorOperation = TableOperation.Insert(error);
                     myStorageMaster.GetErrorsTable().Execute(errorOperation);
                 }
-                xmlsQueue.DeleteMessage(unloadXML);
+                myStorageMaster.GetXMLsQueue().DeleteMessage(unloadXML);
                 //xmlsList.RemoveAt(0);
             }
             Debug.WriteLine("Crawler Initialized. Waiting to Crawl.");
@@ -179,12 +176,13 @@ namespace CrawlerLibrary
 
                         int index = myStorageMaster.GetIndexSize();
 
-                        // Removes " - Cnn.com"
+                        // Removes suffixes from title
                         pageTitle = pageTitle.Split(new string[] { " - CNN.com" }, StringSplitOptions.None)[0];
-
-                        // Removes " | Bleacher Report"
                         pageTitle = pageTitle.Split(new string[] { " | Bleacher Report" }, StringSplitOptions.None)[0];
-
+                        pageTitle = pageTitle.Split(new string[] { " - CNNPolitics.com" }, StringSplitOptions.None)[0];
+                        pageTitle = pageTitle.Split(new string[] { " - CNN Video" }, StringSplitOptions.None)[0];
+                        pageTitle = pageTitle.Split(new string[] { " - Special Reports from CNN.com" }, StringSplitOptions.None)[0];
+                         
                         try
                         {
                             WebPage newWebpage = new WebPage(pageTitle, aURL.ToLower()/*convertedURL*/, index);
@@ -201,18 +199,25 @@ namespace CrawlerLibrary
 
                                 if (!string.IsNullOrEmpty(href))
                                 {
-                                    // get subdomain here
+                                    // get subdomain here and path logic here
                                     Uri theURI = new Uri(aURL);
 
-                                    if (!uniqueUrls.Contains(href) && href.StartsWith("http://"))
+                                    string potentialURL = theURI.Host + theURI.PathAndQuery;
+                                    if (potentialURL.StartsWith("www"))
+                                    {
+                                        potentialURL = potentialURL.Replace("www.", "");
+                                    }
+                                    potentialURL = "http://" + potentialURL;
+
+                                    if (!visited.Contains(potentialURL))
                                     {
                                         // Href is of cnn or bleacherreport domain
-                                        if (href.Contains("cnn.com") || href.Contains("bleacherreport.com"))
+                                        if (potentialURL.Contains("cnn.com") || potentialURL.Contains("bleacherreport.com"))
                                         {
-                                            if (!disalloweds.Contains(href))
+                                            if (!disalloweds.Contains(potentialURL))
                                             {
-                                                uniqueUrls.Add(href);
-                                                CloudQueueMessage hrefMessage = new CloudQueueMessage(href);
+                                                visited.Add(potentialURL);
+                                                CloudQueueMessage hrefMessage = new CloudQueueMessage(potentialURL);
                                                 myStorageMaster.GetUrlsQueue().AddMessage(hrefMessage);
                                             }
                                         }

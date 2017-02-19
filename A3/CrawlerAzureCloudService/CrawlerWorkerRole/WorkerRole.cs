@@ -120,8 +120,8 @@ namespace CrawlerWorkerRole
                         // Crawler is idling, start crawl
                         if (myStorageMaster.GetStatus() == StorageMaster._StatusIdling)
                         {
-                            //myCrawler.Initialize(myStorageMaster, StorageMaster._CNNRobotsTXT);
-                            myCrawler.Initialize(myStorageMaster, StorageMaster._BleacherReportRobotsTXT);
+                            myCrawler.Initialize(myStorageMaster, StorageMaster._CNNRobotsTXT);
+                            //myCrawler.Initialize(myStorageMaster, StorageMaster._BleacherReportRobotsTXT);
                         }
 
                         // Always remove from queue
@@ -146,9 +146,8 @@ namespace CrawlerWorkerRole
                 // Take one url and crawl
                 else if (myStorageMaster.GetQueueSize(myStorageMaster.GetUrlsQueue()) != 0)
                 {
-                    CloudQueue urlQueue = myStorageMaster.GetUrlsQueue();
-                    CloudQueueMessage URL = urlQueue.GetMessage();
-                    urlQueue.DeleteMessage(URL);
+                    CloudQueueMessage URL = myStorageMaster.GetUrlsQueue().GetMessage();
+                    myStorageMaster.GetUrlsQueue().DeleteMessage(URL);
                     myCrawler.crawl(myStorageMaster, URL.AsString);
                 }
 
