@@ -26,29 +26,32 @@
         <h1 class="center-align">CNN Crawler Admin Dashboard</h1>
 
         <div class="row">
-            <div class="col s6">
-                <h3>CPU Utilization % :</h3>
+            <div class="col s4">
+                <h3 id="status">Status :</h3>
             </div>
             <div class="col s6">
-                <h3>RAM Available :</h3>
+                <h3 id="cpu">CPU Utilization % :</h3>
+            </div>
+            <div class="col s6">
+                <h3 id="ram">RAM Available :</h3>
             </div>
         </div>
 
         <div class="row">
-            <div class="col s12"> <h3>Number of URLs Crawled: </h3> </div>
-            <div class="col s6"> <h3>Size of Queue:</h3> </div>
-            <div class="col s6"> <h3>Size of Index:</h3> </div>
+            <div class="col s12"> <h3 id="total">Number of URLs Crawled: </h3> </div>
+            <div class="col s6"> <h3 id="qSize">Size of Queue:</h3> </div>
+            <div class="col s6"> <h3 id="iSize">Size of Index:</h3> </div>
         </div>
 
         <div class="row">
             <div class="col s6"> <h3>Last 10 Urls Crawled:</h3> </div>
-            <ul class="collection">
+            <ul class="collection" id="lastten">
                 <!--<li class="collection-item"></li>-->
             </ul>
 
             <div class="col s3">
                 <h3>Error:</h3>
-                <ul class="collection">
+                <ul class="collection" id="errorMes">
                     <!--<li class="collection-item"></li>-->
                 </ul>
             </div>
@@ -56,7 +59,7 @@
 
             <div class="col s3">
                 <h3>@ Url:</h3>
-                <ul class="collection">
+                <ul class="collection" id="errorUrl">
                     <!--<li class="collection-item"></li>-->
                 </ul>
             </div>
@@ -65,18 +68,23 @@
         <h5>Control the above Information with these: </h5>
 
         <div class="row">
-            <button class="waves-effect waves-light btn" id="start">CLEAR ALL</button>
-            <button class="waves-effect waves-light btn" id="stop">START CRAWLING</button>
-            <button class="waves-effect waves-light btn" id="clear">RETRIEVE DATA</button>
+            <button class="waves-effect waves-light btn" id="stop" onclick="STARTCRAWLING()">START CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="clear" onclick="STOPCRAWLING()">STOP CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="start" onclick="CLEARINDEX()">CLEAR ALL</button>
         </div>
 
         <div class="row">
             <div class="col s12">
-                Search <a href="#">content</a> URL:
-                <div class="input-field inline">
-                    <input id="textbox" type="text" class="validate" required>
-                    <label for="textbox" data-error="wrong" data-success="right"></label>
-                </div>
+                Search a URL:
+                <form class="col s12" onsubmit="URLTOPAGE()">
+                    <div class="input-field inline">
+                        <input id="textbox" type="text" class="validate" required>
+                        <label for="textbox" data-error="wrong" data-success="right"></label>
+                    </div>
+                </form>
+                
+
+                <div id="titleSearchResult"></div>
             </div>
         </div>
     </div>

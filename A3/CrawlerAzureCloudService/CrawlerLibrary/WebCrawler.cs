@@ -80,72 +80,79 @@ namespace CrawlerLibrary
                 XmlDocument xDoc = new XmlDocument();
 
                 CloudQueueMessage unloadXML = myStorageMaster.GetXMLsQueue().GetMessage();
-                string urlAsString = unloadXML.AsString;
-
-                try
+                if (unloadXML != null)
                 {
-                    xDoc.Load(urlAsString);
-                    //xDoc.Load(xmlsList[0]);
-                    string xml = xDoc.InnerXml;
+                    string urlAsString = unloadXML.AsString;
 
-                    using (XmlReader xreader = XmlReader.Create(new StringReader(xml)))
+                    try
                     {
-                        while (xreader.ReadToFollowing("loc"))
+                        xDoc.Load(urlAsString);
+                        //xDoc.Load(xmlsList[0]);
+                        string xml = xDoc.InnerXml;
+
+                        using (XmlReader xreader = XmlReader.Create(new StringReader(xml)))
                         {
-                            string content = xreader.ReadElementContentAsString();
-                            DateTime urlDate;
-                            bool validDateCheck = false;
-
-                            if (robotsDotTXT == StorageMaster._CNNRobotsTXT && xreader.ReadToFollowing("lastmod"))
+                            while (xreader.ReadToFollowing("loc"))
                             {
-                                urlDate = DateTime.Parse(xreader.ReadElementContentAsString());
-                                validDateCheck = (urlDate == null || urlDate.AddMonths(2).CompareTo(DateTime.Now) >= 0) ? true : false;
+                                string content = xreader.ReadElementContentAsString();
+                                DateTime urlDate;
+                                bool validDateCheck = false;
 
-                                if (validDateCheck)
+                                if (robotsDotTXT == StorageMaster._CNNRobotsTXT && xreader.ReadToFollowing("lastmod"))
                                 {
-                                    if (content.EndsWith(".xml"))
+                                    urlDate = DateTime.Parse(xreader.ReadElementContentAsString());
+                                    validDateCheck = (urlDate == null || urlDate.AddMonths(2).CompareTo(DateTime.Now) >= 0) ? true : false;
+
+                                    if (validDateCheck)
                                     {
-                                        myStorageMaster.GetXMLsQueue().AddMessage(new CloudQueueMessage(content));
-                                        //xmlsList.Add(content);
-                                        Debug.WriteLine("Loaded " + content);
-                                    }
-                                    else if (content.Contains("cnn.com"))
-                                    {
-                                        if (!visited.Contains(content))
+                                        if (content.EndsWith(".xml"))
                                         {
-                                            visited.Add(content);
-                                            myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
+                                            myStorageMaster.GetXMLsQueue().AddMessage(new CloudQueueMessage(content));
+                                            //xmlsList.Add(content);
                                             Debug.WriteLine("Loaded " + content);
+                                        }
+                                        else if (content.Contains("cnn.com"))
+                                        {
+                                            if (!visited.Contains(content))
+                                            {
+                                                visited.Add(content);
+                                                myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
+                                                Debug.WriteLine("Loaded " + content);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            else if (content.Contains("bleacherreport"))
-                            {
-                                if (!visited.Contains(content))
+                                else if (content.Contains("bleacherreport"))
                                 {
-                                    visited.Add(content);
-                                    myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
-                                    Debug.WriteLine("Loaded " + content);
+                                    if (!visited.Contains(content))
+                                    {
+                                        visited.Add(content);
+                                        myStorageMaster.GetUrlsQueue().AddMessage(new CloudQueueMessage(content));
+                                        Debug.WriteLine("Loaded " + content);
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                Debug.WriteLine(content + " did not pass date check");
+                                else
+                                {
+                                    Debug.WriteLine(content + " did not pass date check");
+                                }
                             }
                         }
                     }
-                }
-                catch (Exception ex)
+                    catch (Exception ex)
+                    {
+                        HtmlWeb htmlWeb = new HtmlWeb();
+                        Debug.WriteLine("An error occured at: " + urlAsString);
+                        AnError error = new AnError(urlAsString, ex.ToString());
+                        TableOperation errorOperation = TableOperation.Insert(error);
+                        myStorageMaster.GetErrorsTable().Execute(errorOperation);
+                    }
+                    myStorageMaster.GetXMLsQueue().DeleteMessage(unloadXML);
+                    //xmlsList.RemoveAt(0);
+                } else
                 {
-                    HtmlWeb htmlWeb = new HtmlWeb();
-                    Debug.WriteLine("An error occured at: " + urlAsString);
-                    AnError error = new AnError(urlAsString, htmlWeb.StatusCode.ToString());
-                    TableOperation errorOperation = TableOperation.Insert(error);
-                    myStorageMaster.GetErrorsTable().Execute(errorOperation);
+                    break;
                 }
-                myStorageMaster.GetXMLsQueue().DeleteMessage(unloadXML);
-                //xmlsList.RemoveAt(0);
+
             }
             Debug.WriteLine("Crawler Initialized. Waiting to Crawl.");
             myStorageMaster.SetStatus(StorageMaster._StatusIdling);
@@ -161,109 +168,114 @@ namespace CrawlerLibrary
                     HtmlDocument htmlPage = new HtmlWeb().Load(aURL);
 
                     var title = htmlPage.DocumentNode.SelectSingleNode("//head/title");
-                    string pageTitle = title.InnerText;
-
-                    if (pageTitle.Equals("Error"))
+                    if (title != null)
                     {
-                        HtmlWeb htmlWeb = new HtmlWeb();
-                        Debug.WriteLine("An error occured at: " + aURL);
-                        AnError error = new AnError(aURL, htmlWeb.StatusCode.ToString());
-                        TableOperation errorOperation = TableOperation.Insert(error);
-                        myStorageMaster.GetErrorsTable().Execute(errorOperation);
-                    }
-                    else
-                    {
+                        string pageTitle = title.InnerText;
 
-                        int index = myStorageMaster.GetIndexSize();
-
-                        // Removes suffixes from title
-                        pageTitle = pageTitle.Split(new string[] { " - CNN.com" }, StringSplitOptions.None)[0];
-                        pageTitle = pageTitle.Split(new string[] { " | Bleacher Report" }, StringSplitOptions.None)[0];
-                        pageTitle = pageTitle.Split(new string[] { " - CNNPolitics.com" }, StringSplitOptions.None)[0];
-                        pageTitle = pageTitle.Split(new string[] { " - CNN Video" }, StringSplitOptions.None)[0];
-                        pageTitle = pageTitle.Split(new string[] { " - Special Reports from CNN.com" }, StringSplitOptions.None)[0];
-                         
-                        try
+                        if (pageTitle.Equals("Error"))
                         {
-                            WebPage newWebpage = new WebPage(pageTitle, aURL.ToLower()/*convertedURL*/, index);
-                            TableOperation urlOperation = TableOperation.Insert(newWebpage);
-                            myStorageMaster.GetUrlsTable().Execute(urlOperation);
+                            HtmlWeb htmlWeb = new HtmlWeb();
+                            Debug.WriteLine("An error occured at: " + aURL);
+                            AnError error = new AnError(aURL, htmlWeb.StatusCode.ToString());
+                            TableOperation errorOperation = TableOperation.Insert(error);
+                            myStorageMaster.GetErrorsTable().Execute(errorOperation);
                         }
-                            catch (Microsoft.WindowsAzure.Storage.StorageException) { }
-
-                        try
+                        else
                         {
-                            foreach (HtmlNode node in htmlPage.DocumentNode.SelectNodes("//a"))
+
+                            int index = myStorageMaster.GetIndexSize();
+
+                            // Removes suffixes from title
+                            pageTitle = pageTitle.Split(new string[] { " - CNN.com" }, StringSplitOptions.None)[0];
+                            pageTitle = pageTitle.Split(new string[] { " | Bleacher Report" }, StringSplitOptions.None)[0];
+                            pageTitle = pageTitle.Split(new string[] { " - CNNPolitics.com" }, StringSplitOptions.None)[0];
+                            pageTitle = pageTitle.Split(new string[] { " - CNN Video" }, StringSplitOptions.None)[0];
+                            pageTitle = pageTitle.Split(new string[] { " - Special Reports from CNN.com" }, StringSplitOptions.None)[0];
+
+                            try
                             {
-                                string href = node.GetAttributeValue("href", string.Empty.Trim());
-
-                                if (!string.IsNullOrEmpty(href))
+                                WebPage newWebpage = new WebPage(pageTitle, aURL.ToLower()/*convertedURL*/, index);
+                                TableOperation urlOperation = TableOperation.Insert(newWebpage);
+                                myStorageMaster.GetUrlsTable().Execute(urlOperation);
+                            }
+                            catch (Exception ex)
+                            {
+                                HtmlWeb htmlWeb = new HtmlWeb();
+                                Debug.WriteLine("An error occured at: " + aURL);
+                                AnError error = new AnError(aURL, ex.ToString());
+                                TableOperation errorOperation = TableOperation.Insert(error);
+                                myStorageMaster.GetErrorsTable().Execute(errorOperation);
+                            }
+                            try
+                            {
+                                foreach (HtmlNode node in htmlPage.DocumentNode.SelectNodes("//a").ToArray())
                                 {
-                                    // get subdomain here and path logic here
-                                    Uri theURI = new Uri(aURL);
+                                    string href = node.GetAttributeValue("href", string.Empty.Trim());
 
-                                    string potentialURL = theURI.Host + theURI.PathAndQuery;
-                                    if (potentialURL.StartsWith("www"))
+                                    if (!string.IsNullOrEmpty(href))
                                     {
-                                        potentialURL = potentialURL.Replace("www.", "");
-                                    }
-                                    potentialURL = "http://" + potentialURL;
-
-                                    if (!visited.Contains(potentialURL))
-                                    {
-                                        // Href is of cnn or bleacherreport domain
-                                        if (potentialURL.Contains("cnn.com") || potentialURL.Contains("bleacherreport.com"))
+                                        try
                                         {
-                                            if (!disalloweds.Contains(potentialURL))
+                                            // get subdomain here and path logic here
+                                            Uri theURI = new Uri(new Uri(aURL), href);
+
+                                            string potentialURL = theURI.ToString();
+                                            if (potentialURL.StartsWith("www"))
                                             {
-                                                visited.Add(potentialURL);
-                                                CloudQueueMessage hrefMessage = new CloudQueueMessage(potentialURL);
-                                                myStorageMaster.GetUrlsQueue().AddMessage(hrefMessage);
+                                                potentialURL = potentialURL.Replace("www.", "");
                                             }
+
+                                            if (!potentialURL.StartsWith("http://"))
+                                            {
+                                                potentialURL = "http://" + potentialURL;
+                                            }
+
+                                            if (!visited.Contains(potentialURL))
+                                            {
+                                                // Href is of cnn or bleacherreport domain
+                                                if (potentialURL.Contains("cnn.com") || potentialURL.Contains("bleacherreport.com"))
+                                                {
+                                                    if (!disalloweds.Contains(potentialURL))
+                                                    {
+                                                        visited.Add(potentialURL);
+                                                        CloudQueueMessage hrefMessage = new CloudQueueMessage(potentialURL);
+                                                        myStorageMaster.GetUrlsQueue().AddMessage(hrefMessage);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            HtmlWeb htmlWeb = new HtmlWeb();
+                                            Debug.WriteLine("An error occured at: " + aURL);
+                                            AnError error = new AnError(aURL, ex.ToString());
+                                            TableOperation errorOperation = TableOperation.Insert(error);
+                                            myStorageMaster.GetErrorsTable().Execute(errorOperation);
                                         }
                                     }
                                 }
                             }
+                            catch (Exception ex)
+                            {
+                                HtmlWeb htmlWeb = new HtmlWeb();
+                                Debug.WriteLine("An error occured at: " + aURL);
+                                AnError error = new AnError(aURL, ex.ToString());
+                                TableOperation errorOperation = TableOperation.Insert(error);
+                                myStorageMaster.GetErrorsTable().Execute(errorOperation);
+                            }
                         }
-                        catch (Exception e) { }
-                        
                     }
                 }
-                catch (System.NullReferenceException)
+                catch (Exception ex)
                 {
                     HtmlWeb htmlWeb = new HtmlWeb();
                     Debug.WriteLine("An error occured at: " + aURL);
-                    AnError error = new AnError(aURL, htmlWeb.StatusCode.ToString());
+                    AnError error = new AnError(aURL, ex.ToString());
                     TableOperation errorOperation = TableOperation.Insert(error);
                     myStorageMaster.GetErrorsTable().Execute(errorOperation);
                 }
             }
             myStorageMaster.SetStatus(StorageMaster._StatusIdling);
         }
-
-        //public string processURL(string inputURL)
-        //{
-        //    string processedURL = "";
-        //    Uri theURI = new Uri(inputURL);
-        //    // Parse different kinds of hrefs
-        //    if (inputURL.StartsWith("//"))
-        //    {
-        //        processedURL = inputURL.Remove(0, 2);
-        //    }
-        //    else if (inputURL.StartsWith("http"))
-        //    {
-        //        processedURL = inputURL;
-        //    }
-        //    else if (inputURL.StartsWith("/"))
-        //    {
-        //        processedURL = "http://" + theURI.DnsSafeHost + inputURL;
-        //    }
-        //    else if (inputURL.Contains("cnn.com") || inputURL.Contains("bleacherreport.com"))
-        //    {
-        //        processedURL = inputURL;
-        //    }
-        //    processedURL = processedURL.Trim(new Char[] { '/', ' ' });
-        //    return processedURL;
-        //}
     }
 }

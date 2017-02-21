@@ -121,7 +121,7 @@ namespace CrawlerWorkerRole
                         if (myStorageMaster.GetStatus() == StorageMaster._StatusIdling)
                         {
                             myCrawler.Initialize(myStorageMaster, StorageMaster._CNNRobotsTXT);
-                            //myCrawler.Initialize(myStorageMaster, StorageMaster._BleacherReportRobotsTXT);
+                            myCrawler.Initialize(myStorageMaster, StorageMaster._BleacherReportRobotsTXT);
                         }
 
                         // Always remove from queue
@@ -151,7 +151,7 @@ namespace CrawlerWorkerRole
                     myCrawler.crawl(myStorageMaster, URL.AsString);
                 }
 
-                await Task.Delay(1000);
+                await Task.Delay(500);
             }
         }
     }

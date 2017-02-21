@@ -26,10 +26,9 @@ namespace CrawlerLibrary
         private static CloudStorageAccount StorageAccount; // My Credentials
 
         private static CloudQueue directivesQueue; // Queue to direct worker role
-        private static CloudQueue xmlsQueue; 
+        private static CloudQueue xmlsQueue; // Queue With Sitemaps
         private static CloudQueue urlsQueue; // Queue with unprocessed urls (not yet indexed)
         
-        private static CloudTable countsTable; // Table containing list of counts 
         private static CloudTable errorsTable; // Table containing list of error urls
         private static CloudTable performancesTable; // Table containing worker role performance information
         private static CloudTable statusesTable; // Table with current status of crawler(s)
@@ -52,10 +51,6 @@ namespace CrawlerLibrary
             urlsQueue = queueClient.GetQueueReference("queue-of-urls");
             urlsQueue.CreateIfNotExists();
 
-
-
-            countsTable = tableClient.GetTableReference("tableofcounts");
-            countsTable.CreateIfNotExists();
 
             errorsTable = tableClient.GetTableReference("tableoferrors");
             errorsTable.CreateIfNotExists();
@@ -91,11 +86,6 @@ namespace CrawlerLibrary
         public CloudQueue GetUrlsQueue()
         {
             return urlsQueue;
-        }
-
-        public CloudTable GetCountsTable()
-        {
-            return countsTable;
         }
 
         public CloudTable GetErrorsTable()
@@ -136,7 +126,11 @@ namespace CrawlerLibrary
 
         public void clearAll()
         {
-            countsTable.DeleteIfExists();
+            directivesQueue.Clear();
+            urlsQueue.Clear();
+            xmlsQueue.Clear();
+
+            performancesTable.DeleteIfExists();
             statusesTable.DeleteIfExists();
             urlsTable.DeleteIfExists();
             errorsTable.DeleteIfExists();
@@ -153,21 +147,19 @@ namespace CrawlerLibrary
                 pageList.Add(page);
             }
 
-            pageList.OrderByDescending(x => x.index);
-
             if (pageList.Count == 0)
             {
-                return 0;
+                return 1;
             }
             else
             {
-                return pageList[0].index;
+                return (pageList.Count + 1);
             }
         }
 
         public int GetTotalCrawledUrls()
         {
-            int indexNum = GetIndexSize();
+            int indexNum = GetIndexSize() - 1;
             TableQuery<AnError> query = new TableQuery<AnError>();
             int errorNum = errorsTable.ExecuteQuery(query).Count();
 
@@ -201,14 +193,14 @@ namespace CrawlerLibrary
             return result;
         }
 
-        public List<string> GetErrors()
+        public Dictionary<string, string> GetErrors()
         {
-            List<string> result = new List<string>();
-            TableQuery<AnError> query = new TableQuery<AnError>().Take(30);
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            TableQuery<AnError> query = new TableQuery<AnError>().Take(10);
 
             foreach (AnError error in errorsTable.ExecuteQuery(query))
             {
-                result.Add(error.URL);
+                result.Add(error.URL, error.Error);
             }
 
             return result;

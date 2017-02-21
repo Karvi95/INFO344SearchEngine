@@ -1,29 +1,21 @@
 ---Azure Setup---
--Section 0: Data Cleaning
-Frustratingly, the wikipedia dump includes not only random punctuation marks in the page titles, but also denotes (spaces) with (underscores). Thus, it was imperative to run the following two grep commands: 
-						grep -v '[^a-zA-Z_]' enwiki-20170101-all-titles-in-ns0 > output.txt
-						grep -rl  '_' output.txt | xargs sed -i 's/_/ /g
-the first one searchs the file for all non punctuation, except for underscores, marks and outputs them to a text file and then the second one searches for the remaining underscores and replaces thme with spaces. 
--Section 1: Creating Storage.
-Once the data was processed, it was time to store said file in a BinaryLargeOBject or BLOB. I created the BLOB with LRS, a container, and in my WebConfig would later copy and paste it the connection String.
+Section 0: Had to set up Generalized Storage and obtain the connection string to put into the config file.
 
----Trie---
--Section 1: Constructing Trie
-I had constructed a Trie when preparing for interviews in Java so I was able to recall my knowledge of that implementation and adapt what we learned in class (for example, the auto property unique to C#) to write up the TrieNode, Trie constructor and insert method which were then validated with these resources: https://leetcode.com/articles/implement-trie-prefix-tree/ and https://www.youtube.com/watch?v=AXjmTQ8LEoI .
--Section 2: Retrieving 10 results from Trie
-This was very difficult. The first resource above gave me a hint; I was to find the prefix of the user input string first before I returned any matches at all. Secondly, I used the hint given in class to adapt the Depth-First-Search pattern. My thought process is included in the comments.
+---Coding---
+-Section 1: Table Classes
+Based on the inclass assignment where we had to save the sum of numbers into an Azure table, I realized that I would need as many classes as there were items to keep track of. Therefore, I created a WebPage Class, an Error Class, a Status Class, and a Performance Class. When I went to insert the title and the url into the partition and row keys of the first-mentioned class, I found that there were conflicts because I did not use an MD5 algorithm to hash them. Originally, I had wanted to make a function but because I had been using this in many files I decided to create an MD5Hash object. 
 
----WebService---
--Section 0: Setup
-I created a new project after downloading the AzureSDK: it was a AzureCloudService. Because we need to run this web service on the cloud, I added a WebRole to the project.
--Section 1: Creating WebService.asmx
-I added another group of tags to the WebConfig; these where the HTTP Get and Post requests. Then I could start on three Web Methods. The first was to download the file from the blob so that the Trie could read it; I used Azure's native CloudManager Objects, after I had installed them using NuGet Package Manager console. Next I had to build the Trie in a specific way to not use up too much memory at a time; I inserted 1000 lines each time and ensured that I had at least 20 MB of RAM left using PerformanceCounters.
-Lastly, I had to create the searchTrie Method: this was simply calling getPrefix on myTrie and returning a serialized list of Strings that start with the prefix. 
--Section 2: Preserving the Service
-I published this project and recieved a new type of url: it was a .cloudapp.net. I used an external service, called UptimeRobot, that I found on Google to regularly search two strings: "Apple" and "Balloon" at five and twenty minute intervals to preserve the already-built trie: express a good user-experience.
+-Section 2: StorageMaster Class
+In the beginning, I had initialized a bunch of queues and tables in the web role. When I realized that I had to reinitialize all of them in the worker role too, I decided that it was too cumbersome not to make a class that would act as a "bag" where I could just pull the relevant storage item in question. This became the impetus for my StorageMaster Class. In this class, I had created a queue for unprocessed URLs, a queue to tell it when to stop and start, and an XML queue (this would provide visibility into whether the sitemaps were being parsed correctly, added after it became difficult to check the status). It also had tables for errors, processed urls, performances and statuses so that it would know what state it was in. All of these were private fields. The StorageMaster class also has public fields of the directives, CPU and RAM Counters and the initial seed robots.txt files because all of these were pertinent to the individual queues and tables storage. The class also has getters and setters and other functions that help complete the assignment.
 
----Ajax---
-Using hints from the in-class assignment, I adapted the code to post to the appropriate method with the appropriate input: searchTrie and queryValue respectively. Once I receive output, I parse the json object to display the results as divs on the front end.
+-Section 3: WebCrawler Class
+This class performs the bulk of the crawling work. First there is an intialize method where robots.txt is parsed for all initial sitemaps and the first-order urls from those sitemaps. A special condition is enforced: only sitemaps and urls from 2 months ago are loaded to the queue when the robots.txt is cnn.com whereas all the sites are loaded if the robots.txt belongs to bleacherreport.com. Disallowed urls are not added via local hashset. Once the queue has been seeded from the initial urls, the crawl method can take a url from the queue, get the page title, and, along with todays date, the url, and the index, add to the table. Then, all of its references are properly formatted, fed to a local hashset of visited urls to prevent duplicates from being inserted into the queue. All the Urls to the queue are indexed for easy retrieval. Any errors are logged.
 
----Front End---
-As a bit of fun; I reflected the wikipedia logo and set the header to the flipped version of the eponymous site: aidepikiw so as to not to get sued ;) . I also did some minor formatting.
+-Section 4: WorkerRole
+The primary function of this file is to store all of the performance information at regular intervals and, using the StorageManager's directives queue, direct the crawl to initialize and crawl when appropriate.
+
+-Section 5: WebRole (axmx)
+The primary function of this file is to communicate to the webrole when the cralwer should start, stop, clear all indexes, and when to report the status of the crawler which includes [State of each worker role web crawler (loading, crawling, idle), Machine counters (CPU Utilization%, RAM available), #URLs crawled, Last 10 URLs crawled, Size of queue (#urls left in pipeline to be crawled), Size of index (Table storage with our crawled data), Any errors and their URLs)].
+
+-Section 6: Javascript and HTML
+The primary function of this file is to translate user behavior from the front end dashboard such as clicking on start and clear to requests to the asmx file. Additionally, through ajax, we can get the aforementioned information and display it to the dashboard.

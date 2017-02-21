@@ -98,16 +98,25 @@ namespace CrawlerWebRole
             // Last 10 URL's crawled
             string sumString = "";
             foreach (string s in myStorageMaster.GetRecentUrls())
+            {
                 sumString += s + " ";
+            }
             results.Add(sumString);
 
+
             // Any error URL's
-            string errorString = "";
-            foreach (string e in myStorageMaster.GetErrors())
+            Dictionary<string, string> errorDict = myStorageMaster.GetErrors();
+
+            string errorURLString = string.Join(" ", errorDict.Keys.ToList());
+
+            string errorMessagesString = "";
+            foreach (KeyValuePair<string, string> e in errorDict)
             {
-                errorString += e + " ";
+                errorMessagesString += e.Value + " ";
             }
-            results.Add(errorString);
+            results.Add(errorMessagesString);
+
+            results.Add(errorURLString);
 
             return results;
         }
