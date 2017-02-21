@@ -6,7 +6,7 @@ $(document).ready(function () {
     function STARTCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/startCrawling",
+            url: "admin.asmx/startCrawling",
             data: "{url: 'http://www.cnn.com/robots.txt'}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
@@ -21,7 +21,7 @@ $(document).ready(function () {
     function STOPCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/stopCrawling",
+            url: "admin.asmx/stopCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully stopped crawling.");
@@ -35,7 +35,7 @@ $(document).ready(function () {
     function CLEARINDEX() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/clearIndex",
+            url: "admin.asmx/clearIndex",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully cleared index.");
@@ -79,11 +79,12 @@ $(document).ready(function () {
     function DISPLAYSTATUS() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/GetStatus",
+            url: "admin.asmx/Report",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
                 console.log("ajaxGetStatus success");
+                console.log(msg.d);
 
                 //Status
                 $("#status").append('<span>' + msg.d[0] + '</span>');
@@ -112,15 +113,15 @@ $(document).ready(function () {
                 }
 
                 //Error messages
-                var errorsMes = msg.d[7].split(" ");
+                var errorsMes = msg.d[7].split("||");
                 for (var i = 0; i < errorsMes.length; i++) {
-                    $("#errorMes").append('<li class="collection-item">' + errorMes[i] + '</li>');
+                    $("#errorMes").append('<li class="collection-item">' + errorsMes[i] + '</li>');
                 }
 
                 //Error urls
                 var errorsUrls = msg.d[8].split(" ");
                 for (var i = 0; i < errorsUrls.length; i++) {
-                    $("#errorUrls").append('<li class="collection-item">' + errorUrls[i] + '</li>');
+                    $("#errorUrl").append('<li class="collection-item">' + errorsUrls[i] + '</li>');
                 }
 
             },

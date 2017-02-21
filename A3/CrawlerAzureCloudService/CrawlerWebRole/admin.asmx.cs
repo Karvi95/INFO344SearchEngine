@@ -97,6 +97,7 @@ namespace CrawlerWebRole
 
             // Last 10 URL's crawled
             string sumString = "";
+
             foreach (string s in myStorageMaster.GetRecentUrls())
             {
                 sumString += s + " ";
@@ -112,7 +113,7 @@ namespace CrawlerWebRole
             string errorMessagesString = "";
             foreach (KeyValuePair<string, string> e in errorDict)
             {
-                errorMessagesString += e.Value + " ";
+                errorMessagesString += errorDict[e.Key] + "||";
             }
             results.Add(errorMessagesString);
 

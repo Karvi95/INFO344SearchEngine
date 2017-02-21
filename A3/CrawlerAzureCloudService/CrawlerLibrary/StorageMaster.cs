@@ -183,11 +183,12 @@ namespace CrawlerLibrary
                 entities.Add(page);
             }
 
-            entities.OrderByDescending(x => x.index);
+            entities.OrderByDescending(x => x.Timestamp).ToList();
 
             for (int i = 0; i < 10; i++)
             {
-                result.Add(Encoding.UTF8.GetString(Convert.FromBase64String(entities[i].RowKey)));
+                
+                result.Add(entities[entities.Count - (1 + i)].URL);
             }
 
             return result;
