@@ -14,6 +14,7 @@ $(document).ready(function () {
                 var lasttendata = JSON.parse(msg.d);
 
                 //Status
+                $("#status span").child
                 $("#status").append('<span>' + lasttendata + '</span>');
             },
             error: function (msg) {
