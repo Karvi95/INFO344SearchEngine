@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     function DISPLAYSTATUS() {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "admin.asmx/Report",
             contentType: "application/json; charset=utf-8",
             dataType: "json",

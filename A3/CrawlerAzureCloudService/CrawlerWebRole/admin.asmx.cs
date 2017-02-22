@@ -41,8 +41,10 @@ namespace CrawlerWebRole
         [WebMethod]
         public string startCrawling()
         {
-            
+            // Puge what was crawled
             clearIndex();
+
+            // Start Crawling
             myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StartMessage));
              
             return "Started.";
@@ -51,6 +53,7 @@ namespace CrawlerWebRole
         [WebMethod]
         public string stopCrawling()
         {
+            // Stop Crawling
             myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StopMessage));
     
             return "No longer crawling in my crawl.";
@@ -59,8 +62,10 @@ namespace CrawlerWebRole
         [WebMethod]
         public string clearIndex()
         {
+            // Stop Crawling
             myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StopMessage));
 
+            // Clear all storage
             myStorageMaster.clearAll();
 
             // Pause Thread

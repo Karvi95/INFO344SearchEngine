@@ -38,8 +38,6 @@ namespace CrawlerWorkerRole
             myStorageMaster = new StorageMaster(ConfigurationManager.AppSettings["StorageConnectionString"]);
             myCrawler = new WebCrawler();
 
-            //myStorageMaster.SetStatus(StorageMaster._StatusLoading);
-
             cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
             wait = 0;
@@ -85,7 +83,7 @@ namespace CrawlerWorkerRole
             // TODO: Replace the following with your own logic.
             while (!cancellationToken.IsCancellationRequested)
             {
-                // Store performance information every 500ms
+                // Store performance information
                 if (wait == 0)
                 {
                     string CPU = cpuCounter.NextValue().ToString();
@@ -111,39 +109,40 @@ namespace CrawlerWorkerRole
                 // Read from command queue every 50ms
                 CloudQueueMessage directiveMessage = myStorageMaster.GetDirectivesQueue().GetMessage();
 
-                // Non-empty message
+                // If there is a message,
                 if (directiveMessage != null)
                 {
-                    // Start message
+                    // and that message is a start message,
                     if (directiveMessage.AsString.Equals(StorageMaster._StartMessage))
                     {
-                        // Crawler is idling, start crawl
+                        // and the crawler is idling, parse robots.txt and sitemaps (initialize).
                         if (myStorageMaster.GetStatus() == StorageMaster._StatusIdling)
                         {
                             myCrawler.Initialize(myStorageMaster, StorageMaster._CNNRobotsTXT);
                             myCrawler.Initialize(myStorageMaster, StorageMaster._BleacherReportRobotsTXT);
                         }
 
-                        // Always remove from queue
+                        // Remove message from queue always to be up-to-date.
                         myStorageMaster.GetDirectivesQueue().DeleteMessage(directiveMessage);
                     }
-                    // Stop message
+                    // If it was a stop message instead
                     else if (directiveMessage.AsString.Equals(StorageMaster._StopMessage))
                     {
-                        // Crawler is still loading, keep stop message pending
+                        // And it isn't loading then, keep wait on stop message
                         if (myStorageMaster.GetStatus() != StorageMaster._StatusLoading)
                         {
-                            // Crawler is currently crawling
-                            // Stop all crawling and clear url queue
-                            myStorageMaster.GetUrlsQueue().Clear();
+                            // If Crawler is crawling, clear
+                            // Stop all crawling and clear all and set status to idling
+                            myStorageMaster.clearAll();
                             myStorageMaster.SetStatus(StorageMaster._StatusIdling);
 
+                            // Remove message from queue always to be up-to-date.
                             myStorageMaster.GetDirectivesQueue().DeleteMessage(directiveMessage);
                         }
                     }
                 }
-                // No pending command, crawler is not loading and url queue is not empty
-                // Take one url and crawl
+                // If there's no directive but url queue is not empty; (crawler is not loading) must be ready to crawl 
+                // so take one unprocessed url from queue and crawl it.
                 else if (myStorageMaster.GetQueueSize(myStorageMaster.GetUrlsQueue()) != 0)
                 {
                     CloudQueueMessage URL = myStorageMaster.GetUrlsQueue().GetMessage();
