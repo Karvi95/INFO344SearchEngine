@@ -11,11 +11,105 @@ $(document).ready(function () {
                 console.log("ajaxGetStatus success");
                 console.log(msg.d);
 
-                var lasttendata = JSON.parse(msg.d);
+                var jsStatus = JSON.parse(msg.d);
 
                 //Status
-                $("#status span").child
-                $("#status").append('<span>' + lasttendata + '</span>');
+                //$("#status span").child.removeChild();
+                $("#status").append('<span>' + jsStatus + '</span>');
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getPerformance",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log("ajaxGetStatus success");
+                console.log(msg.d);
+
+                var jsPref = JSON.parse(msg.d);
+
+                //$("#cpu span").child.remove();
+
+                //$("#ram span").child.remove();
+
+                //CPU
+                $("#cpu").append('<span>' + jsPref[0] + '</span>');
+
+                //RAM
+                $("#ram").append('<span>' + jsPref[1] + '</span>');
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getTotal",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log("ajaxGetStatus success");
+                console.log(msg.d);
+
+                var jsTotal = JSON.parse(msg.d);
+
+                //$("#total span").child.remove();
+                //TOTAL
+                $("#total").append('<span>' + jsTotal + '</span>');
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/sizeQ",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log("ajaxGetStatus success");
+                console.log(msg.d);
+
+                var jsQSize = JSON.parse(msg.d);
+
+                //$("#qSize span").child.remove();
+
+                //Queue Size
+                $("#qSize").append('<span>' + jsQSize + '</span>');
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/sizeI",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log("ajaxGetStatus success");
+                console.log(msg.d);
+
+                var jsISize = JSON.parse(msg.d);
+
+                //Index Size
+                $("#iSize").append('<span>' + jsISize + '</span>');
+
             },
             error: function (msg) {
                 console.log(msg.d);
@@ -111,98 +205,19 @@ function DISPLAYSTATUS() {
 }
 
 function DISPLAYPREF() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/getPerformance",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
-
-            var lasttendata = JSON.parse(msg);
-
-            //CPU
-            $("#cpu").append('<span>' + msg.d[0] + '</span>');
-
-            //RAM
-            $("#ram").append('<span>' + msg.d[1] + '</span>');
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
+    
 }
     
 function DISPLAYTOTAL() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/getTotal",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
-
-            var lasttendata = JSON.parse(msg);
-
-            //TOTAL
-            $("#total").append('<span>' + msg.d[0] + '</span>');
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
+    
 }
 
 function DISPLAYQUEUESIZE() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/sizeQ",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
 
-            var lasttendata = JSON.parse(msg);
-
-            //Queue Size
-            $("#qSize").append('<span>' + msg.d[0] + '</span>');
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
 }
 
 function DISPLAYINDEXSIZE() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/sizeI",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
 
-            var lasttendata = JSON.parse(msg);
-
-            //Queue Size
-            $("#qSize").append('<span>' + msg.d[0] + '</span>');
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
 }
 
 function DISPLAYLASTTEN() {
