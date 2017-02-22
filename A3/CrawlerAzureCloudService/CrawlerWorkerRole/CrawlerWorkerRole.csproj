@@ -96,10 +96,6 @@
       <Project>{b425ecb9-522c-48fb-9783-218c21b93263}</Project>
       <Name>CrawlerLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrawlerWebRole\CrawlerWebRole.csproj">
-      <Project>{1950a7a4-7983-4980-b624-d6811638ae57}</Project>
-      <Name>CrawlerWebRole</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

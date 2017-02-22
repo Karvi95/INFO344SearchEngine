@@ -29,9 +29,7 @@ namespace CrawlerWebRole
     {
 
         private static StorageMaster myStorageMaster;
-        //public static readonly string _CNNRobotsTXT = "http://www.cnn.com/robots.txt";
-        //public static readonly string _BleacherReportRobotsTXT = "http://bleacherreport.com/robots.txt";
-
+      
         public admin()
         {
             myStorageMaster = new StorageMaster(ConfigurationManager.AppSettings["StorageConnectionString"]);
@@ -77,12 +75,20 @@ namespace CrawlerWebRole
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string> Report()
+        public string getStatus()
         {
             List<string> results = new List<string>();
 
             // State of worker role
             results.Add(myStorageMaster.GetStatus());
+
+            return new JavaScriptSerializer().Serialize(results);
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string getPerformance()
+        {
+            List<string> results = new List<string>();
 
             // CPU utilization %
             results.Add(myStorageMaster.GetPerformanceCounter(StorageMaster._CPUCounter));
@@ -90,15 +96,46 @@ namespace CrawlerWebRole
             // RAM available
             results.Add(myStorageMaster.GetPerformanceCounter(StorageMaster._RAMCounter));
 
+            return new JavaScriptSerializer().Serialize(results);
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string getTotal()
+        {
+
+            List<string> results = new List<string>();
+
             // # URL's crawled
             results.Add("" + myStorageMaster.GetTotalCrawledUrls());
 
+            return new JavaScriptSerializer().Serialize(results);
+        }
+
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string sizeQ()
+        {
+
+            List<string> results = new List<string>();
             // Size of queue (number of URL's to be crawled)
             results.Add(myStorageMaster.GetQueueSize(myStorageMaster.GetUrlsQueue()).ToString());
+            return new JavaScriptSerializer().Serialize(results);
+        }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string sizeI()
+        {
+
+            List<string> results = new List<string>();
             // Size of index (table storage with crawled data)
             results.Add(myStorageMaster.GetIndexSize().ToString());
+            return new JavaScriptSerializer().Serialize(results);
+        }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string lastTen()
+        {
+
+            List<string> results = new List<string>();
             // Last 10 URL's crawled
             string sumString = "";
 
@@ -107,8 +144,14 @@ namespace CrawlerWebRole
                 sumString += s + " ";
             }
             results.Add(sumString);
+            return new JavaScriptSerializer().Serialize(results);
+        }
 
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public string getErrors()
+        {
 
+            List<string> results = new List<string>();
             // Any error URL's
             Dictionary<string, string> errorDict = myStorageMaster.GetErrors();
 
@@ -122,10 +165,9 @@ namespace CrawlerWebRole
             results.Add(errorMessagesString);
 
             results.Add(errorURLString);
-
-            return results;
+            return new JavaScriptSerializer().Serialize(results);
         }
-
+    
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string retrieveTitle(string URL)
