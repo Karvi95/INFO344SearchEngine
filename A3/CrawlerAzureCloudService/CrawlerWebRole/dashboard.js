@@ -8,14 +8,13 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
                 var jsStatus = JSON.parse(msg.d);
 
                 //Status
-                //$("#status span").child.removeChild();
-                $("#status").append('<span>' + jsStatus + '</span>');
+                $("#status").text(jsStatus);
             },
             error: function (msg) {
                 console.log(msg.d);
@@ -29,20 +28,16 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
                 var jsPref = JSON.parse(msg.d);
 
-                //$("#cpu span").child.remove();
-
-                //$("#ram span").child.remove();
-
                 //CPU
-                $("#cpu").append('<span>' + jsPref[0] + '</span>');
+                $("#cpu").text(jsPref[0]);
 
                 //RAM
-                $("#ram").append('<span>' + jsPref[1] + '</span>');
+                $("#ram").text(jsPref[1]);
 
             },
             error: function (msg) {
@@ -57,14 +52,13 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
                 var jsTotal = JSON.parse(msg.d);
 
-                //$("#total span").child.remove();
                 //TOTAL
-                $("#total").append('<span>' + jsTotal + '</span>');
+                $("#total").text(jsTotal);
 
             },
             error: function (msg) {
@@ -79,15 +73,13 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
                 var jsQSize = JSON.parse(msg.d);
 
-                //$("#qSize span").child.remove();
-
                 //Queue Size
-                $("#qSize").append('<span>' + jsQSize + '</span>');
+                $("#qSize").text(jsQSize);
 
             },
             error: function (msg) {
@@ -102,13 +94,13 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
                 var jsISize = JSON.parse(msg.d);
 
                 //Index Size
-                $("#iSize").append('<span>' + jsISize + '</span>');
+                $("#iSize").text(jsISize);
 
             },
             error: function (msg) {
@@ -116,6 +108,45 @@ $(document).ready(function () {
                 console.log("ajaxGetStatus error");
             }
         });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/lastTen",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                console.log("ajaxGetStatus success");
+                console.log("MESSAGE: " + msg.d);
+                var jsLastTen = JSON.parse(msg.d);
+                console.log(jsLastTen[0]);
+                var jsLastTenArray = jsLastTen[0].split(" ");
+                console.log("array: " + jsLastTenArray[0]);
+
+                var string = "#lastten";
+                //Populating List
+                for (var i = 0; i < jsLastTenArray.length; i++) {
+                    string = "#lastten" + i;
+                    console.log(string);
+                    $(string).text(jsLastTenArray[i]);
+                }
+                //$("#lastten0").text(jsLastTen[0]);
+                //$("#lastten1").text(jsLastTen[1]);
+                //$("#lastten2").text(jsLastTen[2]);
+                //$("#lastten3").text(jsLastTen[3]);
+                //$("#lastten4").text(jsLastTen[4]);
+                //$("#lastten5").text(jsLastTen[5]);
+                //$("#lastten6").text(jsLastTen[6]);
+                //$("#lastten7").text(jsLastTen[7]);
+                //$("#lastten8").text(jsLastTen[8]);
+                //$("#lastten8").text(jsLastTen[9]);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
         //DISPLAYSTATUS();
         //DISPLAYPREF();
         //DISPLAYTOTAL();
@@ -221,31 +252,7 @@ function DISPLAYINDEXSIZE() {
 }
 
 function DISPLAYLASTTEN() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/lastTen",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
 
-            var lasttendata = JSON.parse(msg);
-
-            //last Ten
-            var recentUrls = msg.d[0].split(" ");
-            if (recentUrls.length !== 1) {
-                for (var i = 0; i < 10; i++) {
-                    $("#lastten").append('<li class="collection-item">' + recentUrls[i] + '</li>');
-                }
-            }
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
 }
     
 function DISPLAYERRORS() {

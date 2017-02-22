@@ -195,7 +195,7 @@ namespace CrawlerLibrary
             recentTen = recentTen.Trim(new Char[] { '|' });
             string[] recentTenArray = recentTen.Split('|');
 
-            for (int i = 0; i < recentTenArray.Length - 1; i++)
+            for (int i = 0; i < recentTenArray.Length; i++)
             {
                 result.Add(recentTenArray[i]);
             }
