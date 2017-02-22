@@ -76,12 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACount.cs" />
-    <Compile Include="ADuplicate.cs" />
     <Compile Include="AnError.cs" />
     <Compile Include="APerformance.cs" />
     <Compile Include="AStatus.cs" />
-    <Compile Include="CrawlerResult.cs" />
+    <Compile Include="LastTenEntity.cs" />
     <Compile Include="MD5Hash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorageMaster.cs" />

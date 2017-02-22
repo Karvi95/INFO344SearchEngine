@@ -32,9 +32,6 @@ namespace CrawlerWebRole
         //public static readonly string _CNNRobotsTXT = "http://www.cnn.com/robots.txt";
         //public static readonly string _BleacherReportRobotsTXT = "http://bleacherreport.com/robots.txt";
 
-        private bool readyState;
-
-
         public admin()
         {
             myStorageMaster = new StorageMaster(ConfigurationManager.AppSettings["StorageConnectionString"]);
@@ -74,6 +71,7 @@ namespace CrawlerWebRole
 
 
         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public List<string> Report()
         {
             List<string> results = new List<string>();

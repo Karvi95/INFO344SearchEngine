@@ -21,12 +21,14 @@ namespace CrawlerLibrary
         private readonly DateTime earliestDate;
         private HashSet<string> disalloweds;
         private HashSet<string> visited;
+        private List<string> lastten;
 
         public WebCrawler()
         {
             earliestDate = new DateTime(2017, 2, 10);
             disalloweds = new HashSet<string>();
             visited = new HashSet<string>();
+            lastten = new List<string>();
         }
 
         public void Initialize(StorageMaster myStorageMaster, string robotsDotTXT)
@@ -194,6 +196,23 @@ namespace CrawlerLibrary
 
                             try
                             {
+
+                                if (lastten.Count < 10)
+                                {
+                                    lastten.Add(aURL);
+                                } else
+                                {
+                                    lastten.RemoveAt(0);
+                                    lastten.Add(aURL);
+                                }
+
+                                string toInsert = string.Join("|", lastten.ToArray());
+
+                                LastTenEntity currentTen = new LastTenEntity(toInsert);
+                                TableOperation currentTenOperation = TableOperation.InsertOrReplace(currentTen);
+                                myStorageMaster.GetLastTenTable().Execute(currentTenOperation);
+
+
                                 WebPage newWebpage = new WebPage(pageTitle, aURL.ToLower()/*convertedURL*/, index);
                                 TableOperation urlOperation = TableOperation.Insert(newWebpage);
                                 myStorageMaster.GetUrlsTable().Execute(urlOperation);

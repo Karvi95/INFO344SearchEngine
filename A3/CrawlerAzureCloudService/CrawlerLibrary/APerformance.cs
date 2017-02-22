@@ -14,7 +14,7 @@ namespace CrawlerLibrary
         public APerformance(int counterId, string performance)
         {
             this.PartitionKey = "" + counterId;
-            this.RowKey = "" + 0;
+            this.RowKey = "0";
 
             this.performance = performance;
         }

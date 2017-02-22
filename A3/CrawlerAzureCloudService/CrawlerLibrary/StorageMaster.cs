@@ -28,13 +28,14 @@ namespace CrawlerLibrary
         private static CloudQueue directivesQueue; // Queue to direct worker role
         private static CloudQueue xmlsQueue; // Queue With Sitemaps
         private static CloudQueue urlsQueue; // Queue with unprocessed urls (not yet indexed)
-        
+
+        private static CloudTable lastTenTable; // Table containing list of lastTen urls
         private static CloudTable errorsTable; // Table containing list of error urls
         private static CloudTable performancesTable; // Table containing worker role performance information
         private static CloudTable statusesTable; // Table with current status of crawler(s)
         private static CloudTable urlsTable; // Table with processed urls (indexed page titles)
 
-                       
+
         public StorageMaster(string connectionString)
         {
             StorageAccount = CloudStorageAccount.Parse(connectionString);
@@ -51,6 +52,10 @@ namespace CrawlerLibrary
             urlsQueue = queueClient.GetQueueReference("queue-of-urls");
             urlsQueue.CreateIfNotExists();
 
+
+
+            lastTenTable = tableClient.GetTableReference("tableoflastten");
+            lastTenTable.CreateIfNotExists();
 
             errorsTable = tableClient.GetTableReference("tableoferrors");
             errorsTable.CreateIfNotExists();
@@ -70,7 +75,7 @@ namespace CrawlerLibrary
             {
                 SetStatus(StorageMaster._StatusIdling);
             }
-                
+
         }
 
         public CloudQueue GetXMLsQueue()
@@ -87,6 +92,12 @@ namespace CrawlerLibrary
         {
             return urlsQueue;
         }
+
+        public CloudTable GetLastTenTable()
+        {
+            return lastTenTable;
+        }
+
 
         public CloudTable GetErrorsTable()
         {
@@ -174,21 +185,18 @@ namespace CrawlerLibrary
 
         public List<string> GetRecentUrls()
         {
-            List<WebPage> entities = new List<WebPage>();
             List<string> result = new List<string>();
-            TableQuery<WebPage> query = new TableQuery<WebPage>();
+            TableQuery<LastTenEntity> currentTenQuery = new TableQuery<LastTenEntity>()
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, "LastTen"));
 
-            foreach (WebPage page in urlsTable.ExecuteQuery(query))
+            string recentTen = lastTenTable.ExecuteQuery(currentTenQuery).First().lastTen;
+
+            recentTen = recentTen.Trim(new Char[] { '|' });
+            string[] recentTenArray = recentTen.Split('|');
+
+            for (int i = 0; i < recentTenArray.Length - 1; i++)
             {
-                entities.Add(page);
-            }
-
-            entities.OrderByDescending(x => x.Timestamp).ToList();
-
-            for (int i = 0; i < 10; i++)
-            {
-                
-                result.Add(entities[entities.Count - (1 + i)].URL);
+                result.Add(recentTenArray[i]);
             }
 
             return result;
@@ -221,7 +229,5 @@ namespace CrawlerLibrary
 
             return result;
         }
-
-        
     }
 }

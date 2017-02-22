@@ -6,7 +6,7 @@ $(document).ready(function () {
     function STARTCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/startCrawling",
+            url: "admin.asmx/startCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully started crawling.");
@@ -20,7 +20,7 @@ $(document).ready(function () {
     function STOPCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/stopCrawling",
+            url: "admin.asmx/stopCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully stopped crawling.");
@@ -34,7 +34,7 @@ $(document).ready(function () {
     function CLEARINDEX() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/clearIndex",
+            url: "admin.asmx/clearIndex",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully cleared index.");
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/retrieveTitle",
+            url: "admin.asmx/retrieveTitle",
             data: JSON.stringify({ URL: input }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -78,7 +78,7 @@ $(document).ready(function () {
     function DISPLAYSTATUS() {
         $.ajax({
             type: "POST",
-            url: "http://a2info344.cloudapp.net/admin.asmx/Report",
+            url: "admin.asmx/Report",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
@@ -113,18 +113,19 @@ $(document).ready(function () {
 
                 //Error messages
                 var errorsMes = msg.d[7].split("||");
-                for (var i = 0; i < errorsMes.length; i++) {
-                    $("#errorMes").append('<li class="collection-item">' + errorsMes[i] + '</li>');
+                for (var j = 0; j < errorsMes.length;j++) {
+                    $("#errorMes").append('<li class="collection-item">' + errorsMes[j] + '</li>');
                 }
 
                 //Error urls
                 var errorsUrls = msg.d[8].split(" ");
-                for (var i = 0; i < errorsUrls.length; i++) {
-                    $("#errorUrl").append('<li class="collection-item">' + errorsUrls[i] + '</li>');
+                for (var k = 0; k < errorsUrls.length; k++) {
+                    $("#errorUrl").append('<li class="collection-item">' + errorsUrls[k] + '</li>');
                 }
 
             },
             error: function (msg) {
+                console.log(msg.d);
                 console.log("ajaxGetStatus error");
             }
         });
