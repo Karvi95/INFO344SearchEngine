@@ -141,6 +141,7 @@ namespace CrawlerLibrary
             urlsQueue.Clear();
             xmlsQueue.Clear();
 
+            lastTenTable.DeleteIfExists();
             performancesTable.DeleteIfExists();
             statusesTable.DeleteIfExists();
             urlsTable.DeleteIfExists();

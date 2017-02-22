@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "CrawlerAzureCloudService", "CrawlerAzureCloudService\CrawlerAzureCloudService.ccproj", "{49C43D27-618C-4F60-949F-2388BB5347CD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B425ECB9-522C-48FB-9783-218C21B93263} = {B425ECB9-522C-48FB-9783-218C21B93263}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrawlerWebRole", "CrawlerWebRole\CrawlerWebRole.csproj", "{1950A7A4-7983-4980-B624-D6811638AE57}"
 EndProject
