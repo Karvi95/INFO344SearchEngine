@@ -23,6 +23,8 @@
     <div class="container">
         <h1 class="center-align">CNN Crawler Admin Dashboard</h1>
 
+        <button class="waves-effect waves-light btn" id="report">REFRESH</button>
+
         <div class="row">
             <div class="col s4">
                 <h3 id="status">Status:</h3>
@@ -66,22 +68,19 @@
         <h5>Control the above Information with these: </h5>
 
         <div class="row">
-            <button class="waves-effect waves-light btn" id="stop" onclick="STARTCRAWLING()">START CRAWLING</button>
-            <button class="waves-effect waves-light btn" id="clear" onclick="STOPCRAWLING()">STOP CRAWLING</button>
-            <button class="waves-effect waves-light btn" id="start" onclick="CLEARINDEX()">CLEAR ALL</button>
+            <button class="waves-effect waves-light btn" id="start">START CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="stop">STOP CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="clear">CLEAR ALL</button>
         </div>
 
         <div class="row">
             <div class="col s12">
                 Search a URL:
-                <form class="col s12" onsubmit="URLTOPAGE()">
                     <div class="input-field inline">
                         <input id="textbox" type="text" class="validate" required>
                         <label for="textbox" data-error="wrong" data-success="right"></label>
+                        <button class="waves-effect waves-light btn" id="submit">SUBMIT</button>
                     </div>
-                </form>
-                
-
                 <div id="titleSearchResult"></div>
             </div>
         </div>

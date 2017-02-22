@@ -85,6 +85,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string getPerformance()
         {
@@ -99,6 +100,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string getTotal()
         {
@@ -111,6 +113,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string sizeQ()
         {
@@ -121,6 +124,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string sizeI()
         {
@@ -131,6 +135,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string lastTen()
         {
@@ -147,6 +152,7 @@ namespace CrawlerWebRole
             return new JavaScriptSerializer().Serialize(results);
         }
 
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public string getErrors()
         {
