@@ -44,11 +44,10 @@ namespace CrawlerWebRole
         [WebMethod]
         public string startCrawling()
         {
-            //while (myStorageMaster.GetDirectivesQueue().ApproximateMessageCount == null)
-            //{
-                myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StartMessage));
-            //}
-           
+            
+            clearIndex();
+            myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StartMessage));
+             
             return "Started.";
         }
 
@@ -63,10 +62,12 @@ namespace CrawlerWebRole
         [WebMethod]
         public string clearIndex()
         {
+            myStorageMaster.GetDirectivesQueue().AddMessage(new CloudQueueMessage(StorageMaster._StopMessage));
+
             myStorageMaster.clearAll();
 
             // Pause Thread
-            Thread.Sleep(50000);
+            Thread.Sleep(40000);
 
             return "Purged all Storage.";
         }

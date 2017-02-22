@@ -6,8 +6,7 @@ $(document).ready(function () {
     function STARTCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "admin.asmx/startCrawling",
-            data: "{url: 'http://www.cnn.com/robots.txt'}",
+            url: "http://a2info344.cloudapp.net/admin.asmx/startCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully started crawling.");
@@ -21,7 +20,7 @@ $(document).ready(function () {
     function STOPCRAWLING() {
         $.ajax({
             type: "POST",
-            url: "admin.asmx/stopCrawling",
+            url: "http://a2info344.cloudapp.net/admin.asmx/stopCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully stopped crawling.");
@@ -35,7 +34,7 @@ $(document).ready(function () {
     function CLEARINDEX() {
         $.ajax({
             type: "POST",
-            url: "admin.asmx/clearIndex",
+            url: "http://a2info344.cloudapp.net/admin.asmx/clearIndex",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
                 console.log("Successfully cleared index.");
@@ -60,7 +59,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "admin.asmx/retrieveTitle",
+            url: "http://a2info344.cloudapp.net/admin.asmx/retrieveTitle",
             data: JSON.stringify({ URL: input }),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -79,7 +78,7 @@ $(document).ready(function () {
     function DISPLAYSTATUS() {
         $.ajax({
             type: "POST",
-            url: "admin.asmx/Report",
+            url: "http://a2info344.cloudapp.net/admin.asmx/Report",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
@@ -106,7 +105,7 @@ $(document).ready(function () {
 
                 //last Ten
                 var recentUrls = msg.d[6].split(" ");
-                if (recentUrls.length != 1) {
+                if (recentUrls.length !== 1) {
                     for (var i = 0; i < 10; i++) {
                         $("#lastten").append('<li class="collection-item">' + recentUrls[i] + '</li>');
                     }
@@ -131,6 +130,5 @@ $(document).ready(function () {
         });
     }
 });
-
 
 //$(document).ready(ajaxGetStatus());

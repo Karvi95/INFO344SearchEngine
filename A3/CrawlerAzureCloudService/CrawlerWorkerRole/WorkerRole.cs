@@ -151,7 +151,7 @@ namespace CrawlerWorkerRole
                     myCrawler.crawl(myStorageMaster, URL.AsString);
                 }
 
-                await Task.Delay(500);
+                await Task.Delay(50);
             }
         }
     }
