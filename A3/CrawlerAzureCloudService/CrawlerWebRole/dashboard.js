@@ -115,12 +115,12 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log("MESSAGE: " + msg.d);
+                //console.log("ajaxGetStatus success");
+                //console.log("MESSAGE: " + msg.d);
                 var jsLastTen = JSON.parse(msg.d);
-                console.log(jsLastTen[0]);
+                //console.log(jsLastTen[0]);
                 var jsLastTenArray = jsLastTen[0].split(" ");
-                console.log("array: " + jsLastTenArray[0]);
+                //console.log("array: " + jsLastTenArray[0]);
 
                 var string = "#lastten";
                 //Populating List
@@ -129,17 +129,44 @@ $(document).ready(function () {
                     console.log(string);
                     $(string).text(jsLastTenArray[i]);
                 }
-                //$("#lastten0").text(jsLastTen[0]);
-                //$("#lastten1").text(jsLastTen[1]);
-                //$("#lastten2").text(jsLastTen[2]);
-                //$("#lastten3").text(jsLastTen[3]);
-                //$("#lastten4").text(jsLastTen[4]);
-                //$("#lastten5").text(jsLastTen[5]);
-                //$("#lastten6").text(jsLastTen[6]);
-                //$("#lastten7").text(jsLastTen[7]);
-                //$("#lastten8").text(jsLastTen[8]);
-                //$("#lastten8").text(jsLastTen[9]);
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
 
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getErrors",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var jsErrorMes = JSON.parse(msg.d);
+                console.log(jsErrorMes[0]);
+                var jsErrorMesArray = jsErrorMes[0].split("||");
+                console.log("array: " + jsErrorMesArray[0]);
+
+                var string = "#errorMes";
+                //Populating Error Message
+                for (var i = 0; i < jsErrorMesArray.length; i++) {
+                    string = "#errorMes" + i;
+                    console.log(string);
+                    $(string).text(jsErrorMesArray[i]);
+                }
+                
+                var jsErrorUrl = JSON.parse(msg.d);
+                console.log(jsErrorUrl[0]);
+                var jsErrorUrlArray = jsErrorUrl[1].split(" ");
+                console.log("array: " + jsErrorUrlArray[1]);
+
+                var string = "#errorUrl";
+                //Populating Error Message
+                for (var i = 0; i < jsErrorUrlArray.length; i++) {
+                    string = "#errorUrl" + i;
+                    console.log(string);
+                    $(string).text(jsErrorUrlArray[i]);
+                }
             },
             error: function (msg) {
                 console.log(msg.d);
@@ -231,61 +258,3 @@ $(document).ready(function () {
 
 
 //$(document).ready(ajaxGetStatus());
-function DISPLAYSTATUS() {
-   
-}
-
-function DISPLAYPREF() {
-    
-}
-    
-function DISPLAYTOTAL() {
-    
-}
-
-function DISPLAYQUEUESIZE() {
-
-}
-
-function DISPLAYINDEXSIZE() {
-
-}
-
-function DISPLAYLASTTEN() {
-
-}
-    
-function DISPLAYERRORS() {
-    $.ajax({
-        type: "GET",
-        url: "admin.asmx/getErrors",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            console.log("ajaxGetStatus success");
-            console.log(msg.d);
-
-            var lasttendata = JSON.parse(msg);
-
-            //Error messages
-            var errorsMes = msg.d[0].split("||");
-            for (var j = 0; j < errorsMes.length;j++) {
-                $("#errorMes").append('<li class="collection-item">' + errorsMes[j] + '</li>');
-            }
-
-            //Error urls
-            var errorsUrls = msg.d[1].split(" ");
-            for (var k = 0; k < errorsUrls.length; k++) {
-                $("#errorUrl").append('<li class="collection-item">' + errorsUrls[k] + '</li>');
-            }
-
-        },
-        error: function (msg) {
-            console.log(msg.d);
-            console.log("ajaxGetStatus error");
-        }
-    });
-}
-
-
-
