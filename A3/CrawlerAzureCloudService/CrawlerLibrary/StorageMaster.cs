@@ -206,9 +206,9 @@ namespace CrawlerLibrary
         public Dictionary<string, string> GetErrors()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
-            TableQuery<AnError> query = new TableQuery<AnError>().Take(10);
+            TableQuery<AnError> query = new TableQuery<AnError>();
 
-            foreach (AnError error in errorsTable.ExecuteQuery(query))
+            foreach (AnError error in errorsTable.ExecuteQuery(query).OrderByDescending(error => error.Timestamp).Take(10))
             {
                 result.Add(error.URL, error.Error);
             }
