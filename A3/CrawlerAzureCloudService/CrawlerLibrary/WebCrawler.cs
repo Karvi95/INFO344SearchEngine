@@ -145,7 +145,7 @@ namespace CrawlerLibrary
                         HtmlWeb htmlWeb = new HtmlWeb();
                         Debug.WriteLine("An error occured at: " + urlAsString);
                         AnError error = new AnError(urlAsString, ex.Message);
-                        TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                        TableOperation errorOperation = TableOperation.Insert(error);
                         myStorageMaster.GetErrorsTable().Execute(errorOperation);
                     }
                     myStorageMaster.GetXMLsQueue().DeleteMessage(unloadXML);
@@ -179,7 +179,7 @@ namespace CrawlerLibrary
                             HtmlWeb htmlWeb = new HtmlWeb();
                             Debug.WriteLine("An error occured at: " + aURL);
                             AnError error = new AnError(aURL, htmlWeb.StatusCode.ToString());
-                            TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                            TableOperation errorOperation = TableOperation.Insert(error);
                             myStorageMaster.GetErrorsTable().Execute(errorOperation);
                         }
                         else
@@ -214,7 +214,7 @@ namespace CrawlerLibrary
 
 
                                 WebPage newWebpage = new WebPage(pageTitle, aURL.ToLower()/*convertedURL*/, index);
-                                TableOperation urlOperation = TableOperation.InsertOrReplace(newWebpage);
+                                TableOperation urlOperation = TableOperation.Insert(newWebpage);
                                 myStorageMaster.GetUrlsTable().Execute(urlOperation);
                             }
                             catch (Exception ex)
@@ -222,7 +222,7 @@ namespace CrawlerLibrary
                                 HtmlWeb htmlWeb = new HtmlWeb();
                                 Debug.WriteLine("An error occured at: " + aURL);
                                 AnError error = new AnError(aURL, ex.Message);
-                                TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                                TableOperation errorOperation = TableOperation.Insert(error);
                                 myStorageMaster.GetErrorsTable().Execute(errorOperation);
                             }
                             try
@@ -268,7 +268,7 @@ namespace CrawlerLibrary
                                             HtmlWeb htmlWeb = new HtmlWeb();
                                             Debug.WriteLine("An error occured at: " + aURL);
                                             AnError error = new AnError(aURL, ex.Message);
-                                            TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                                            TableOperation errorOperation = TableOperation.Insert(error);
                                             myStorageMaster.GetErrorsTable().Execute(errorOperation);
                                         }
                                     }
@@ -279,7 +279,7 @@ namespace CrawlerLibrary
                                 HtmlWeb htmlWeb = new HtmlWeb();
                                 Debug.WriteLine("An error occured at: " + aURL);
                                 AnError error = new AnError(aURL, ex.Message);
-                                TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                                TableOperation errorOperation = TableOperation.Insert(error);
                                 myStorageMaster.GetErrorsTable().Execute(errorOperation);
                             }
                         }
@@ -290,7 +290,7 @@ namespace CrawlerLibrary
                     HtmlWeb htmlWeb = new HtmlWeb();
                     Debug.WriteLine("An error occured at: " + aURL);
                     AnError error = new AnError(aURL, ex.Message);
-                    TableOperation errorOperation = TableOperation.InsertOrReplace(error);
+                    TableOperation errorOperation = TableOperation.Insert(error);
                     myStorageMaster.GetErrorsTable().Execute(errorOperation);
                 }
             }
