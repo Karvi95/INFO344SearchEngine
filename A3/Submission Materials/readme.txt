@@ -1,2 +1,2 @@
-- "URL to your Azure instance hosting this website": http://kriarvi.cloudapp.net/dashboard.html
+- "URL to your Azure instance hosting this website": http://kriarvi.cloudapp.net
 - "URL to your github repro": https://github.com/Karvi95/INFO344SearchEngine
