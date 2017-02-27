@@ -1,0 +1,2 @@
+- "URL to your Azure instance hosting this website": 
+- "URL to your github repro": https://github.com/Karvi95/INFO344SearchEngine
