@@ -174,6 +174,28 @@ $(document).ready(function () {
             }
         });
 
+        $.ajax({
+            type: "POST",
+            url: "SearchQuery.asmx/reportStats",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var trieData = JSON.parse(result.d);
+                var trieDataArray = trieData[0].split(",");
+                console.log("array: " + jsErrorMesArray[0]);
+                
+                
+                $("#titlesNum").text(trieDataArray[1]);
+                $("#lasttitle").text(trieDataArray[0]);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+
         //DISPLAYSTATUS();
         //DISPLAYPREF();
         //DISPLAYTOTAL();
@@ -181,6 +203,8 @@ $(document).ready(function () {
         //DISPLAYINDEXSIZE();
         //DISPLAYLASTTEN();
         //DISPLAYERRORS();
+        //DISPLAYTITLES();
+
     })
 
     $('#start').click(function () {
@@ -251,6 +275,34 @@ $(document).ready(function () {
             },
             error: function (msg) {
                 console.log("Error finding title.");
+            }
+        });
+    }),
+
+    $('#rebuild').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "SearchQuery.asmx/buildTrie",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                console.log("Successfully rebuilt.");
+            },
+            error: function (msg) {
+                console.log("Error when building.");
+            }
+        });
+    }),
+
+    $('#download').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "SearchQuery.asmx/downloadBlob",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                console.log("Successfully downloaded.");
+            },
+            error: function (msg) {
+                console.log("Error when downloading.");
             }
         });
     })

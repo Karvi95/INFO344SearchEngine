@@ -28,6 +28,7 @@ namespace SearchInfrastructureWebRole
     {
 
         private static StorageMaster myStorageMaster;
+        private static Dictionary<string, List<string>> cache;
 
         public admin()
         {
@@ -181,7 +182,7 @@ namespace SearchInfrastructureWebRole
 
             string resultTitle = "No result found";
 
-            // Because 
+            // Because get rid of index.html
             if (URL.EndsWith("/index.html"))
             {
                 URL = URL.Substring(0, URL.Length - 11);
@@ -190,7 +191,7 @@ namespace SearchInfrastructureWebRole
             string searcher = new MD5Hash(URL).hashed;
 
             TableQuery<WebPage> titleQuery = new TableQuery<WebPage>()
-                .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, searcher)
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, searcher)
             );
 
             CloudTable urlsTable = myStorageMaster.GetUrlsTable();
@@ -212,7 +213,48 @@ namespace SearchInfrastructureWebRole
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public List<string> search(string searcher)
+        public string search(string input)
+        {
+
+            // Remove punctuation
+            string processedWord = Convert.ToBase64String(Encoding.UTF8.GetBytes(new string(input.ToCharArray().Where(c => !char.IsPunctuation(c)).ToArray()).ToLower()));
+
+            List<string> results = new List<string>();
+            if (cache == null)
+            {
+                cache = new Dictionary<string, List<string>>();
+            }
+
+
+            // Say you search Trump and you've already cached,
+            // Five minutes later, check if cached results has anything
+            // make sure it doesn't return nothing.
+    
+
+            if (cache.Count < 100)
+            {
+                if (cache.ContainsKey(processedWord))
+                {
+                    results = cache[processedWord];
+                }
+                else
+                {
+                    results = this.tableSearch(processedWord);
+                }
+            }
+            else
+            {
+                cache = new Dictionary<string, List<string>>();
+                results = this.tableSearch(processedWord);
+            }
+            return new JavaScriptSerializer().Serialize(results);
+        }
+
+
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public List<string> tableSearch(string searcher)
         {
             List<InvertedIndex> results = new List<InvertedIndex>();
 
@@ -225,7 +267,7 @@ namespace SearchInfrastructureWebRole
 
                 if (processedWord.Length > 0)
                 {
-
+     
                     string check = new MD5Hash(processedWord).hashed;
 
                     TableQuery<InvertedIndex> query = new TableQuery<InvertedIndex>()
@@ -241,34 +283,28 @@ namespace SearchInfrastructureWebRole
                             results.Add(tempList[i]);
                         }
                     }
+
                 }
             }
 
-            return rankSuggestions(results);
+            return rankSuggestions(searcher, results);
 
         }
 
-        private List<string> rankSuggestions(List<InvertedIndex> results)
+        private List<string> rankSuggestions(string searcher, List<InvertedIndex> results)
         {
-            List<string> toReturn = new List<string>();
             var query = results
                 .GroupBy(x => x.RowKey)
                 .Select(x => new Tuple<string, int, string, string, string>(x.Key, x.ToList().Count(), x.First().pageTitle, x.First().URL, x.First().date))
-                .OrderByDescending(x => x.Item2).ThenByDescending(x => x.Item5)
+                .OrderByDescending(x => x.Item2)
+                .ThenByDescending(x => x.Item5)
                 .Take(10)
+                .Select(x => x.Item3 + "," + x.Item4 + "," + x.Item5)
                 .ToList();
 
-            for (int i = 0; i < query.Count(); i++)
-            {
-                if (toReturn.Count < 50)
-                {
-                    toReturn.Add(query[i].Item3);
-                    toReturn.Add(query[i].Item4);
-                    toReturn.Add(query[i].Item5);
-                }
-            }
+            cache[searcher] = new List<string>(query);
 
-            return toReturn;
+            return query;
 
         }
     }

@@ -25,7 +25,7 @@ namespace SearchInfrastructureLibrary
 
         public WebCrawler()
         {
-            earliestDate = new DateTime(2017, 2, 10);
+            earliestDate = new DateTime(2017, 1, 1);
             disalloweds = new HashSet<string>();
             visited = new HashSet<string>();
             lastten = new List<string>();
@@ -97,7 +97,7 @@ namespace SearchInfrastructureLibrary
                                 if (robotsDotTXT == StorageMaster._CNNRobotsTXT && xreader.ReadToFollowing("lastmod"))
                                 {
                                     urlDate = DateTime.Parse(xreader.ReadElementContentAsString());
-                                    validDateCheck = (urlDate == null || urlDate.AddMonths(1).CompareTo(DateTime.Now) >= 0) ? true : false;
+                                    validDateCheck = (urlDate == null || DateTime.Compare(urlDate, earliestDate) >= 0) ? true : false;
 
                                     if (validDateCheck)
                                     {
@@ -280,7 +280,7 @@ namespace SearchInfrastructureLibrary
                                             if (!visited.Contains(potentialURL))
                                             {
                                                 // Href is of cnn or bleacherreport domain
-                                                if (potentialURL.Contains("cnn.com") || potentialURL.Contains("bleacherreport.com"))
+                                                if (potentialURL.Contains("cnn.com") || potentialURL.Contains("bleacherreport.com/articles"))
                                                 {
                                                     if (!disalloweds.Contains(potentialURL))
                                                     {

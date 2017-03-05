@@ -1,6 +1,6 @@
 <?php 
-class BBallPlayer { 
-    private $EntireName, $FName, $MName, $LName, $Suffix, $Team, $GP, $Min, $FG_M, $FG_A, $FG_Pct, $ThreePT_M, $ThreePT_A, $ThreePT_Pct, $FT_M, $FT_A, $FT_Pct, $Rebounds_Off, $Rebounds_Def,$Rebounds_Tot,$Ast,$TO,$Stl,$Blk,$PF,$PPG; 
+class BBallPlayer implements JsonSerializable { 
+    private $EntireName, $FName, $MName, $LName, $Suffix, $Team, $GP, $Min, $FG_M, $FG_A, $FG_Pct, $ThreePT_M, $ThreePT_A, $ThreePT_Pct, $FT_M, $FT_A, $FT_Pct, $Rebounds_Off, $Rebounds_Def, $Rebounds_Tot, $Ast, $TO, $Stl, $Blk, $PF, $PPG; 
 
     function __construct($EntireName, $FName, $MName, $LName, $Suffix, $Team, $GP, $Min, $FG_M, $FG_A, $FG_Pct, $ThreePT_M, $ThreePT_A, $ThreePT_Pct, $FT_M, $FT_A, $FT_Pct, $Rebounds_Off, $Rebounds_Def, $Rebounds_Tot, $Ast, $TO, $Stl, $Blk, $PF, $PPG) {
     	$this->$EntireName=$EntireName;
@@ -9,26 +9,26 @@ class BBallPlayer {
         $this->$LName=$LName;
         $this->$Suffix=$Suffix;
         $this->$Team=$Team;                    
-    	$this->$GP=$GP;                             # Games Played
-    	$this->$Min=$Min;                           # Minutes         
-    	$this->$FG_M=$FG_M;                         # Field Goals Made
-    	$this->$FG_A=$FG_A;                         # Field Goals Attempted
-    	$this->$FG_Pct=$FG_Pct;                     # Field Goal Percentage
-    	$this->$ThreePT_M=$ThreePT_M;               # Three-Pointers Made
-    	$this->$ThreePT_A=$ThreePT_A;               # Three-Pointers Attempted
-    	$this->$ThreePT_Pct=$ThreePT_Pct;           # Three-Pointer Percentage
-    	$this->$FT_M=$FT_M;                         # Free Throws Made
-    	$this->$FT_A=$FT_A;                         # Free Throws Made
-    	$this->$FT_Pct=$FT_Pct;                     # Free Throw Percentage
-    	$this->$Rebounds_Off=$Rebounds_Off;         # Offensive Rebounds
-    	$this->$Rebounds_Def=$Rebounds_Def;         # Defensive Rebounds
-    	$this->$Rebounds_Tot=$Rebounds_Tot;         # Total Rebounds
-    	$this->$Ast=$Ast;                           # Assists
-    	$this->$TO=$TO;                             # Turnovers 
-    	$this->$Stl=$Stl;                           # Steal
-    	$this->$Blk=$Blk;                           # Blocks
-    	$this->$PF=$PF;                             # Personal Fouls
-    	$this->$PPG=$PPG;                           # Points per Game
+    	$this->$GP=$GP;                                                                                    # Games Played
+    	$this->$Min=$Min;                                                                                  # Minutes         
+    	$this->$FG_M=$FG_M;                                                                                # Field Goals Made
+    	$this->$FG_A=$FG_A;                                                                                # Field Goals Attempted
+    	$this->$FG_Pct=$FG_Pct;                                                                            # Field Goal Percentage
+    	$this->$ThreePT_M=$ThreePT_M;                                                                      # Three-Pointers Made
+    	$this->$ThreePT_A=$ThreePT_A;                                                                      # Three-Pointers Attempted
+    	$this->$ThreePT_Pct=$ThreePT_Pct;                                                                  # Three-Pointer Percentage
+    	$this->$FT_M=$FT_M;                                                                                # Free Throws Made
+    	$this->$FT_A=$FT_A;                                                                                # Free Throws Attempted
+    	$this->$FT_Pct=$FT_Pct;                                                                            # Free Throw Percentage
+    	$this->$Rebounds_Off=$Rebounds_Off;                                                                # Offensive Rebounds
+    	$this->$Rebounds_Def=$Rebounds_Def;                                                                # Defensive Rebounds
+    	$this->$Rebounds_Tot=$Rebounds_Tot;                                                                # Total Rebounds
+    	$this->$Ast=$Ast;                                                                                  # Assists
+    	$this->$TO=$TO;                                                                                    # Turnovers 
+    	$this->$Stl=$Stl;                                                                                  # Steal
+    	$this->$Blk=$Blk;                                                                                  # Blocks
+    	$this->$PF=$PF;                                                                                    # Personal Fouls
+    	$this->$PPG=$PPG;                                                                                  # Points per Game
     }
 
     public function getEntireName() {
@@ -131,8 +131,32 @@ class BBallPlayer {
     	return $this->PPG;
     }
     
-    public function getImgURL() {
-        return 'https://nba-players.herokuapp.com/players/' . $this->getLName() . '/' . $this->getFName();
+    public function jsonSerialize()
+    {
+        return [
+            'EntireName' => $this->EntireName,
+            'Team' => $this->Team,
+            'GP' => $this->GP,
+            'Min' => $this->Min,
+            'Ast' => $this->Ast,
+            'Stl' => $this->Stl,
+            'FG_M' => $this->FG_M,
+            'FT_M' => $this->FT_M,
+            'ThreePT_M' => $this->ThreePT_M,
+            'Rebounds_Off' => $this->Rebounds_Off,
+            'TO' => $this->TO,
+            'Blk' => $this->Blk,
+            'FG_A' => $this->FG_A,
+            'FT_A' => $this->FT_A,
+            'ThreePT_A' => $this->ThreePT_A,
+            'Rebounds_Def' => $this->Rebounds_Def,
+            'PPG' => $this->PPG,
+            'PF' => $this->PF,
+            'FG_Pct' => $this->FG_Pct,
+            'FT_Pct' => $this->FT_Pct,
+            'ThreePT_Pct' => $this->ThreePT_Pct,
+            'Rebounds_Tot' => $this->Rebounds_Tot
+        ];
     }
 } 
 

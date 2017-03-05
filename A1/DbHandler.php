@@ -2,22 +2,22 @@
 
 require_once 'Db.php';
 
-if(isset($_POST['query'])) {
+if(isset($_GET['query'])) {
 	$myDB = new Db();
-	$searchterm = trim($_POST['query']);
+	$searchterm = trim($_GET['query']);
 	$NBAers = $myDB->search($searchterm);
 
 	$myDB->kill();
+/*	echo json_encode($NBAers[0]);*/
+	echo $_GET['callback'] . '('.json_encode($NBAers).')';
 
-if (empty($NBAers)) {
+// Not necessary for PA4 BUT was cool for PA1
+/*if (empty($NBAers)) {
 	echo "<p id='emptyResults'>No Such Player.</p>";	
 } else {
 		foreach ($NBAers as $NBA) {
 			echo '<div class="container">
 					<div id="header" style="height:15%;width:100%;">
-					    <div style="float:left">
-					        <img src="' . $NBA->getImgURL() . '" alt="Cover"/>
-					    </div>
 					    <div style="float:right" id="tableness">
 					        <table class="table table-condensed" border="1" width="44" style="margin-left:5%;float:top;"> 
 					            <h2>' . $NBA->getEntireName() . '</h2>' .   
@@ -84,6 +84,5 @@ if (empty($NBAers)) {
 					</div>
 				</div>';							
 		}	
-	}
+	}*/
 }
-

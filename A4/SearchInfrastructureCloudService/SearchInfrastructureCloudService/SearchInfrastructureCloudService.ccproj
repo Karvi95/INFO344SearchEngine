@@ -55,12 +55,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Profiles" />
     <Folder Include="SearchInfrastructureWebRoleContent\" />
     <Folder Include="SearchInfrastructureWorkerRoleContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SearchInfrastructureWebRoleContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SearchInfrastructureWorkerRoleContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\KriarviProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
