@@ -168,7 +168,7 @@ namespace SearchInfrastructureLibrary
                     if (titleNode != null && dateNode != null)
                     {
                         string pageTitle = titleNode.InnerText;
-                        string pageDate = dateNode.InnerText;
+                        string pageDate = dateNode.GetAttributeValue("content", String.Empty);
 
                         if (pageTitle.Equals("Error"))
                         {
