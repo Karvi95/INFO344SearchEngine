@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 
     // Live Search
-    // On Search Submit and Get Results
+    // Get Results for PA1
     function search() {
         var query_value = $("input[name='searchterm']").val().trim();
 
@@ -33,11 +33,9 @@ $(document).ready(function () {
             function onDataReceived(data) {
                 //console.log("jQuery works");
                 $("#results").html(JSON.stringify(data));
-                console.log(data);
-                console.log(data[0].EntireName);
-                console.log(typeof (data[0].EntireName));
-                console.log(data[0].Team);
-                console.log(typeof (data[0].Team));
+                //console.log(data);
+                //console.log(data[0]);
+                //console.log(typeof(data[0].Team));
 
                 $("#entirenameData").text(data[0].EntireName);
                 $("#teamData").text(data[0].Team);
@@ -63,30 +61,51 @@ $(document).ready(function () {
                 $("#reboundstotData").text(data[0].Rebounds_Tot);
 
             }
-        } return false;
+        }
 
+        console.log('PA2 QUERYVALUE: ' + query_value);
+        // Live Search
+        // Get Results for PA2
         $.ajax({
-            type: "post",
-            url: "http://kriarvi.cloudapp.net/mywebservice.asmx/searchtrie",
-            data: json.stringify({ queryvalue: input }),
-            contenttype: "application/json; charset=utf-8",
-            datatype: "json",
+            type: "POST",
+            url: "SearchQuery.asmx/searchTrie",
+            data: JSON.stringify({ queryValue: query_value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "JSON",
             success: function (msg) {
                 var outer = $("<div></div>");
-                $("#jsondiv").html(outer);
-                if (input === "") {
+                $("#jsonDiv").html(outer);
+                if (query_value === "") {
                     var div = $("<div>").text("");
                     outer.append(div);
                 } else if (msg.d == "no results found.") {
                     var div = $("<div>").text("no results found.");
                     outer.append(div);
                 } else {
-                    var data = json.parse(msg.d);
+                    var data = JSON.parse(msg.d);
                     for (var i = 0; i < data.length; i++) {
                         var div = $("<div>").text(data[i]);
                         outer.append(div);
                     }
                 }
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+
+        // Live Search
+        // Get Results for PA3
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/search",
+            data: JSON.stringify({ queryValue: query_value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "JSON",
+            success: function (msg) {
+                console.log(msg);
+
+
             },
             error: function (msg) {
             }

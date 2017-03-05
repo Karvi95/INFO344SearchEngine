@@ -225,12 +225,6 @@ namespace SearchInfrastructureWebRole
                 cache = new Dictionary<string, List<string>>();
             }
 
-
-            // Say you search Trump and you've already cached,
-            // Five minutes later, check if cached results has anything
-            // make sure it doesn't return nothing.
-    
-
             if (cache.Count < 100)
             {
                 if (cache.ContainsKey(processedWord))
@@ -302,7 +296,7 @@ namespace SearchInfrastructureWebRole
                 .Select(x => x.Item3 + "," + x.Item4 + "," + x.Item5)
                 .ToList();
 
-            cache[searcher] = new List<string>(query);
+            //cache[searcher] = new List<string>(query);
 
             return query;
 

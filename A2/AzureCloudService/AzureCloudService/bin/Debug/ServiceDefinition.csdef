@@ -26,10 +26,10 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\AzureCloudService\rcf\Debug\WebRole1Content\" />
+        <SourceDirectory path="C:\INFO344SearchEngine\A2\AzureCloudService\AzureCloudService\rcf\Debug\WebRole1Content\" />
       </Content>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\ReppuVanWinkle\Downloads\INFO344SearchEngine\A2\AzureCloudService\AzureCloudService\ecf\WebRole1Content\" />
+        <SourceDirectory path="C:\INFO344SearchEngine\A2\AzureCloudService\AzureCloudService\ecf\WebRole1Content\" />
       </Content>
     </Contents>
     <Imports>
