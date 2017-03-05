@@ -17,8 +17,8 @@ $(document).ready(function () {
                 $("#status").text(jsStatus);
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -41,8 +41,8 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -62,8 +62,8 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -83,8 +83,8 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -104,8 +104,8 @@ $(document).ready(function () {
 
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -126,13 +126,13 @@ $(document).ready(function () {
                 //Populating List
                 for (var i = 0; i < jsLastTenArray.length; i++) {
                     string = "#lastten" + i;
-                    console.log(string);
+                    //console.log(string);
                     $(string).text(jsLastTenArray[i]);
                 }
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -151,26 +151,26 @@ $(document).ready(function () {
                 //Populating Error Message
                 for (var i = 0; i < jsErrorMesArray.length; i++) {
                     string = "#errorMes" + i;
-                    console.log(string);
+                    //console.log(string);
                     $(string).text(jsErrorMesArray[i]);
                 }
 
                 var jsErrorUrl = JSON.parse(msg.d);
-                console.log(jsErrorUrl[0]);
+                //console.log(jsErrorUrl[0]);
                 var jsErrorUrlArray = jsErrorUrl[1].split(" ");
-                console.log("array: " + jsErrorUrlArray[1]);
+                //console.log("array: " + jsErrorUrlArray[1]);
 
                 var string = "#errorUrl";
                 //Populating Error Message
                 for (var i = 0; i < jsErrorUrlArray.length; i++) {
                     string = "#errorUrl" + i;
-                    console.log(string);
+                    //console.log(string);
                     $(string).text(jsErrorUrlArray[i]);
                 }
             },
             error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
+                //console.log(msg.d);
+                //console.log("ajaxGetStatus error");
             }
         });
 
@@ -180,13 +180,15 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-                var trieData = JSON.parse(result.d);
-                var trieDataArray = trieData[0].split(",");
-                console.log("array: " + jsErrorMesArray[0]);
+                var trieData = JSON.parse(msg.d);
+                console.log('msg: ' + msg);
+                console.log('msg.d: ' + msg.d);
+                var trieDataArray = trieDatax.split(",");
+                console.log("array: " + trieDataArray);
                 
                 
-                $("#titlesNum").text(trieDataArray[1]);
-                $("#lasttitle").text(trieDataArray[0]);
+                $("#titlesNum").text(trieDataArray[0]);
+                $("#lasttitle").text(trieDataArray[1]);
 
             },
             error: function (msg) {
@@ -213,10 +215,10 @@ $(document).ready(function () {
             url: "admin.asmx/startCrawling",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                console.log("Successfully started crawling.");
+                //console.log("Successfully started crawling.");
             },
             error: function (msg) {
-                console.log("Error when starting to crawl.");
+                //console.log("Error when starting to crawl.");
             }
         });
     }),

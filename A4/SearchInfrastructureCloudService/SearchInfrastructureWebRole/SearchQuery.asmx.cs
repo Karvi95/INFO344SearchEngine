@@ -28,7 +28,7 @@ namespace SearchInfrastructureWebRole
 
         private static Trie myTrie = new Trie();
         private string myPath = System.Web.HttpContext.Current.Server.MapPath(@"/output.txt");
-        private static List<string> titleStats = new List<string>();
+        private static string titleStats;
 
         [WebMethod]
         public string downloadBlob()
@@ -84,10 +84,7 @@ namespace SearchInfrastructureWebRole
                 }
             }
 
-            titleStats.Clear();
-            titleStats.Add(", " + counter);
-            titleStats.Add(tempLine);
-
+            titleStats = "" + counter + "," + tempLine;
             return "Trie was Built.";
         }
 

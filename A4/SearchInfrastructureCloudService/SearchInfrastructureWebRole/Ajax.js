@@ -39,29 +39,28 @@ $(document).ready(function () {
                 console.log(data[0].Team);
                 console.log(typeof (data[0].Team));
 
-
-                data[0].EntireName = $("#entirenameData").val();
-                data[0].Team = $("#teamData").val();
-                //$("#gpData").val() = data['GP'];
-                //$("#minData").val() = data['Min'];
-                //$("#astData").val() = data['Ast'];
-                //$("#stlData").val() = data['Stl'];
-                //$("#fgmData").val() = data['FG_M'];
-                //$("#ftmData").val() = data['FT_M'];
-                //$("#threeptmData").val() = data['ThreePT_M'];
-                //$("#reboundsoffData").val() = data['Rebounds_Off'];
-                //$("#toData").val() = data['TO'];
-                //$("#blkData").val() = data['Blk'];
-                //$("#fgaData").val() = data['FG_A'];
-                //$("#ftaData").val() = data['FT_A'];
-                //$("#threeptaData").val() = data['ThreePT_A'];
-                //$("#reboundsdefData").val() = data['Rebounds_Def'];
-                //$("#ppgData").val() = data['PPG'];
-                //$("#pfData").val() = data['PF'];
-                //$("#fgpctData").val() = data['FG_Pct'];
-                //$("#ftpctData").val() = data['FT_Pct'];
-                //$("#threeptpctData").val() = data['ThreePT_Pct'];
-                //$("#reboundstotData").val() = data['Rebounds_Tot'];
+                $("#entirenameData").text(data[0].EntireName);
+                $("#teamData").text(data[0].Team);
+                $("#gpData").text(data[0].GP);
+                $("#minData").text(data[0].Min);
+                $("#astData").text(data[0].Ast);
+                $("#stlData").text(data[0].Stl);
+                $("#fgmData").text(data[0].FG_M);
+                $("#ftmData").text(data[0].FT_M);
+                $("#threeptmData").text(data[0].ThreePT_M);
+                $("#reboundsoffData").text(data[0].Rebounds_Off);
+                $("#toData").text(data[0].TO);
+                $("#blkData").text(data[0].Blk);
+                $("#fgaData").text(data[0].FG_A);
+                $("#ftaData").text(data[0].FT_A);
+                $("#threeptaData").text(data[0].ThreePT_A);
+                $("#reboundsdefData").text(data[0].Rebounds_Def);
+                $("#ppgData").text(data[0].PPG);
+                $("#pfData").text(data[0].PF);
+                $("#fgpctData").text(data[0].FG_Pct);
+                $("#ftpctData").text(data[0].FT_Pct);
+                $("#threeptpctData").text(data[0].ThreePT_Pct);
+                $("#reboundstotData").text(data[0].Rebounds_Tot);
 
             }
         } return false;
