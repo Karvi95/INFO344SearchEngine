@@ -1,15 +1,21 @@
----Azure Setup---
-
+---Setting up the Environment---
+I created a new Cloud project and imported all the existing files to this new namespace: all the classes would be in the SearchInfrastructureLibrary, all the asmx, html, css, and js files would be in my SearchInfrastructureWebRole and the WorkerRole looked relatively the same. Once I had ensured that all the packages had been imported, the WebConfigs had the correct tags and the dependencies had been set, it was time to get started coding.
 
 ---Coding---
--Section 1:  
+-Integrating PA3:  
+I started with the WebCrawler and had to make a few modifications. I created a new class called InvertedIndex where each partition key was a word in the title and the row key was the entire url. This way I could grab urls where one word showed up and the same url would be associated to every word. Next, I changed the 'bleacherreport.com' filter to be a bit more strict and only allowed: 'bleacherreport.com/articles'. I also had to select the pubdate of the url and stored the date crawled when none was present. I changed the earliest date that an article could be to be January 1st 2017. 
 
--Section 2: 
+-Integrating PA1: 
+The first thing I had to do was to have my player class implement the JSONSerializable interface so that when I made a cross domain request, I would be able to encode the response and fire the callback function by creating a supplemental jsonSerialize() method which returned an associative array representation of my object. Next I ensured that I was only returning one result by setting the user input equal to the entire name in the database; this was slighly sad because I had to comment out my levenshtein extra credit from PA1. Most importantly, I had to replace all the POST requests in my PHP files, which were acceptable for same domain requests, with GET requests, because due to security concerns JSONP would fail otherwise. I then copied my table structure that I had been echoing and put that in my new index.html. We basically transformed our NBA database to an API.
 
--Section 3: 
+-Integrating PA2: 
+After building the Trie, I created a temporary string that was comma separated by the number of words I had inserted, which I logged with a counter, and the last title inserted. Then I sent it to the dashboard.js to show on the dashboard. I made sure that the suggestions from the Trie were working.
 
--Section 4: 
+-Commercialization: 
+This was quite easy, I signed up for https://chitika.com/ and within 5 hours received an email that stated that I had been approved by their ad service. I logged in with the credentials they gave me and copied and pasted two code snippets. I set these to span.
 
--Section 5: 
+-Caching: 
+As we did in lecture, I created a dictionary of string to a list of strings where the string was the word and the list was the results I wanted to show: a combined string of title and url demarked by a '|' character. I would check the cache first to make sure I can return the results as fast as possible, if there were a 100 items I would rebuild it. If it wasn't in the cache I would search in the table and I would save these to the cache at the end.
 
--Section 6: 
+-Ranking: 
+As guided by Susan in office hours, I grouped by the row key, created a new Tuple of the key, the list's count, pageTitle, url and date. Then I Ordered by the count first and then by date (which would be either pubdate or date crawled as those were what was saved in table). I took the top 20 results, saved them the result mentioned in the above section and turned it into a list.

@@ -289,7 +289,7 @@ namespace SearchInfrastructureWebRole
                 .Select(x => new Tuple<string, int, string, string, string>(x.Key, x.ToList().Count(), x.First().pageTitle, x.First().URL, x.First().date))
                 .OrderByDescending(x => x.Item2)
                 .ThenByDescending(x => x.Item5)
-                .Take(10)
+                .Take(20)
                 .Select(x => x.Item3 + "|" + x.Item4)
                 .ToList();
 

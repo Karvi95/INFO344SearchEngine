@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
 @import url('https://fonts.googleapis.com/css?family=Questrial');
 
+/*PA1*/
 
 .container{
 	margin-bottom:4em !important;
@@ -60,8 +61,9 @@ body {
 
 #tableness {
     display: none;
-	margin-top: -20em;
-	margin-right: 18em;
+	margin-top: 5em;
+	margin-right: 30em;
+	position: relative;
 }
 
 .table-bordered {
@@ -135,15 +137,32 @@ h2 {
 /*PA2*/
 
 #jsonDiv{
+    display: none;
+	margin-top: 0.5em;
+    margin-left: 27.9em;
+    margin-bottom: -2em !important;
+    
+    border: 1px solid #CD594A;
+    padding-left: -2em;; 
 
+    width: 38em !important;
+    
 }
+
+
 .adsbygoogle{
-	margin-top: 10em;
+	margin-top: 24em;
+	margin-left: 8em;
 	margin-bottom: 3em;
 }
 
+#moveaddsup {
+	margin-top: -5em;
+	margin-left: 58em;
+	position:absolute;
+}
+
 .chitikaAdContainer{
-	display:inline-block;
     margin-top: 5em !important;
 }
 
@@ -191,10 +210,48 @@ h2 {
 }
 
 .firstPart{
+	color: #CD594A;
 	display:inline-block;
 }
 
 .secondPart{
-	display:inline-block;
+	display: inline-block;
 	font-size: 2em !important;
+}
+
+.pa2suggestDiv{
+    color: white !important;
+}
+
+.pa2suggestDiv:hover{
+    background-color: red !important;
+}
+
+/*PA3*/
+
+#pa3Results{
+	margin-top: 23em;
+	margin-left: -7em;
+}
+
+.pa3resultDiv {
+	margin-left: 15em !important;
+	height: 4em !important;
+    margin-bottom: 2em !important;       
+
+    border: 2px solid #CD594A;
+    padding: 10px 10px; 
+
+    width: 50em !important;
+    border-radius: 18px 40px;
+}
+
+.pa3resultA {
+	color: white;
+	font-size: 1.5em !important;
+	text-decoration: none !important;
+}
+
+.pa3resultA:hover {
+	color: red !important;
 }

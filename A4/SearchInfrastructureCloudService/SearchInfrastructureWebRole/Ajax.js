@@ -1,6 +1,5 @@
 ﻿// Start Ready
 $(document).ready(function () {
-
     // Canvas Click Focus
     $('').click(function () {
         $('input.form-control').focus();
@@ -19,7 +18,6 @@ $(document).ready(function () {
         var dup = query_value;
 
         if (query_value !== '') {
-            console.log('TEST');
             $.ajax({
                 type: "GET",
                 url: "http://ec2-35-166-117-23.us-west-2.compute.amazonaws.com/DbHandler.php",
@@ -67,8 +65,10 @@ $(document).ready(function () {
                     $("#entirenameData").text('');
                     $("td").text('');
                 }
+                $("#jsonDiv").css('display', 'block');
             }
         } else {
+            $("#jsonDiv").css('display', 'none');
             $("#tableness").css('display', 'none');
             $("#entirenameData").text('');
             $("td").text('');
@@ -76,33 +76,33 @@ $(document).ready(function () {
 
         // Live Search
         // Get Results for PA2
-        //$.ajax({
-        //    type: "POST",
-        //    url: "SearchQuery.asmx/searchTrie",
-        //    data: JSON.stringify({ queryValue: query_value }),
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "JSON",
-        //    success: function (msg) {
-        //        var outer = $("<div></div>");
-        //        $("#jsonDiv").html(outer);
-        //        if (query_value === "") {
-        //            var div = $("<div>").text("");
-        //            outer.append(div);
-        //        } else if (msg.d == "no results found.") {
-        //            var div = $("<div>").text("no results found.");
-        //            outer.append(div);
-        //        } else {
-        //            var data = JSON.parse(msg.d);
-        //            for (var i = 0; i < data.length; i++) {
-        //                var div = $("<div>").text(data[i]);
-        //                outer.append(div);
-        //            }
-        //        }
-        //    },
-        //    error: function (msg) {
-        //        console.log(msg);
-        //    }
-        //});
+        $.ajax({
+            type: "POST",
+            url: "SearchQuery.asmx/searchTrie",
+            data: JSON.stringify({ queryValue: query_value }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "JSON",
+            success: function (msg) {
+                var outer = $("<div></div>");
+                $("#jsonDiv").html(outer);
+                if (query_value === "") {
+                    var div = $("<div class='container-fluid pa2suggestDiv'>").text("");
+                    outer.append(div);
+                } else if (msg.d === "No results found.") {
+                    var div = $("<div class='container-fluid pa2suggestDiv'>").text("No suggestions found.");
+                    outer.append(div);
+                } else {
+                    var data = JSON.parse(msg.d);
+                    for (var i = 0; i < data.length; i++) {
+                        var div = $("<div class='container-fluid pa2suggestDiv'>").text(data[i]);
+                        outer.append(div);
+                    }
+                }
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
 
         // Live Search
         // Get Results for PA3
@@ -114,13 +114,19 @@ $(document).ready(function () {
             dataType: "JSON",
             success: function (msg) {
                 var jsResultMes = JSON.parse(msg.d);
+                $("#pa3Results").html("");
                 for (var i = 0; i < jsResultMes.length; i++) {
-                    //console.log(i);
-                    //console.log(jsResultMes[i]);
-                    //console.log('SPLITING');
+                    console.log(i);
+                    console.log(jsResultMes[i]);
+                    console.log('SPLITING');
                     var jsResultMesArray = jsResultMes[i].split("|");
-
                     console.log(jsResultMesArray);
+                    var outer = $("<div class='container-fluid pa3resultDiv'></div>");
+                    var ref = $("<a class='pa3resultA'></a>");
+                    ref.text(jsResultMesArray[0]);
+                    ref.attr("href", "" + jsResultMesArray[1]);
+                    outer.append(ref);
+                    $("#pa3Results").append(outer);
                 }
                
 
