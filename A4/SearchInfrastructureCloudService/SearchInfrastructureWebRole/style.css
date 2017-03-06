@@ -29,7 +29,7 @@
 }	
 
 body {
-	background-color: black;
+	background-color: white;
 }
 
 #divSearch {
@@ -62,7 +62,7 @@ body {
 #tableness {
     display: none;
 	margin-top: 5em;
-	margin-right: 30em;
+	margin-right: 39em;
 	position: relative;
 }
 
@@ -83,19 +83,19 @@ th {
 
 td {
 	border: 2px solid #CD594A !important;
-	color: white;
+	color: black;
 	text-align: right !important;
 	font-family: 'Questrial', sans-serif;
 }
 
 #blankSpaceBottom {
-	border-top:2px solid black !important;
-	border-bottom: 2px solid black !important;
+	border-top:2px solid white !important;
+	border-bottom: 2px solid white !important;
 }
 
 #blankSpaceBottomTop {
-	border-top: 2px black !important;
-	border-bottom: 2px solid black !important;
+	border-top: 2px white !important;
+	border-bottom: 2px solid white !important;
 }
 
 input::-webkit-input-placeholder {
@@ -115,7 +115,7 @@ color:black !important;
 }
 
 h2 {
-	color: white;
+	color: black;
 	font-family: 'Lato', sans-serif;
 }
 
@@ -124,14 +124,18 @@ h2 {
 }
 
 #texttosayresults {
-	color: white;
+	color: black;
 	font-family: 'Lato', sans-serif;
 	font-weight: bold;
 }
 
 #lastSp {
-	border-top: 2px solid black !important;
-	border-bottom: 2px solid black !important;
+	border-top: 2px solid white !important;
+	border-bottom: 2px solid white !important;
+}
+
+#entirenameData {
+	color: #54E91E;
 }
 
 /*PA2*/
@@ -172,12 +176,13 @@ h2 {
 
 #Subheading{
 	padding-top: -2em;
-	padding-left: 31.4em;
-	font-size: 1.3em;
+	padding-left: 34em;
+	font-size: 1em;
+	font-family: Space Mono;
 }
 
 #textbox {
-    width: 32em;
+    width: 38em;
     margin-top: 3em;
     margin-left: 28em;
 }
@@ -205,26 +210,34 @@ h2 {
 }
 
 #parodyHeader{
-	padding-left: 40em;
-	margin-bottom: -2em;
+	padding-top: 5em;
+	padding-left: 30em;
+	margin-bottom: -9em;
+}
+
+.orangify {
+	fill: #54E91E;
 }
 
 .firstPart{
-	color: #CD594A;
+	color: #54E91E;
 	display:inline-block;
+	font-family: Space Mono
 }
 
 .secondPart{
 	display: inline-block;
 	font-size: 2em !important;
+	font-family: Space Mono
 }
 
 .pa2suggestDiv{
-    color: white !important;
+    color: black !important;
+    font-family: Raleway;
 }
 
 .pa2suggestDiv:hover{
-    background-color: red !important;
+    background-color: #54E91E !important;
 }
 
 /*PA3*/
@@ -247,11 +260,12 @@ h2 {
 }
 
 .pa3resultA {
-	color: white;
-	font-size: 1.5em !important;
+	color: black;
+	font-size: 1.3em !important;
 	text-decoration: none !important;
+	font-family: Raleway;
 }
 
 .pa3resultA:hover {
-	color: red !important;
+	color: #54E91E !important;
 }

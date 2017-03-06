@@ -83,6 +83,8 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "JSON",
             success: function (msg) {
+                console.log(msg);
+                console.log(msg.d);
                 var outer = $("<div></div>");
                 $("#jsonDiv").html(outer);
                 if (query_value === "") {
