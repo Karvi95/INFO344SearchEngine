@@ -183,7 +183,7 @@ $(document).ready(function () {
                 var trieData = JSON.parse(msg.d);
                 console.log('msg: ' + msg);
                 console.log('msg.d: ' + msg.d);
-                var trieDataArray = trieDatax.split(",");
+                var trieDataArray = trieData.split(",");
                 console.log("array: " + trieDataArray);
                 
                 

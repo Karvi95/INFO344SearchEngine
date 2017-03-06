@@ -216,9 +216,6 @@ namespace SearchInfrastructureWebRole
         public string search(string input)
         {
 
-            // Remove punctuation
-            string processedWord = Convert.ToBase64String(Encoding.UTF8.GetBytes(new string(input.ToCharArray().Where(c => !char.IsPunctuation(c)).ToArray()).ToLower()));
-
             List<string> results = new List<string>();
             if (cache == null)
             {
@@ -227,19 +224,19 @@ namespace SearchInfrastructureWebRole
 
             if (cache.Count < 100)
             {
-                if (cache.ContainsKey(processedWord))
+                if (cache.ContainsKey(input))
                 {
-                    results = cache[processedWord];
+                    results = cache[input];
                 }
                 else
                 {
-                    results = this.tableSearch(processedWord);
+                    results = this.tableSearch(input);
                 }
             }
             else
             {
                 cache = new Dictionary<string, List<string>>();
-                results = this.tableSearch(processedWord);
+                results = this.tableSearch(input);
             }
             return new JavaScriptSerializer().Serialize(results);
         }
@@ -293,10 +290,10 @@ namespace SearchInfrastructureWebRole
                 .OrderByDescending(x => x.Item2)
                 .ThenByDescending(x => x.Item5)
                 .Take(10)
-                .Select(x => x.Item3 + "," + x.Item4 + "," + x.Item5)
+                .Select(x => x.Item3 + "|" + x.Item4)
                 .ToList();
 
-            //cache[searcher] = new List<string>(query);
+            cache[searcher] = new List<string>(query);
 
             return query;
 

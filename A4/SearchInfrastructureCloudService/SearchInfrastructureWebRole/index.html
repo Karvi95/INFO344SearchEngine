@@ -27,7 +27,7 @@
     <div id="parodyHeader"><h1 class="firstPart">A</h1><h2 class="secondPart">IDEPIKI</h2><h1 class="firstPart">W</h1></div>
     <h2 id="Subheading">Article Searcher</h2>
     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" transform="scale(-1,1)" id="logo" alignment="center" />
-    <input type="text" placeholder="Enter a Wikipedia Article Title!" id="textbox" name="searchterm" class="form-control">
+    <input type="text" id="textbox" name="searchterm" class="form-control">
     <div id="jsonDiv"></div>
 
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -41,72 +41,68 @@
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-    <div class="container">
-        <div id="header" style="height:15%;width:100%;">
-            <div style="float:right" id="tableness">
-                <table class="table table-condensed" border="1" width="44" style="margin-left:5%;float:top;">
-                    <h2 id="entirenameData"></h2>
-                    <tr>
-                        <th colspan="2" id="nonSpace">Team:</th>
-                        <td colspan="2" id="teamData"></td>
-                        <th id="lastSp"></th>
-                        <th colspan="2" id="nonSpace">GP:</th>
-                        <td colspan="2" id="gpData"></td> <!--id="leftLine" css-->
-                        <th id="lastSp"></th>
-                        <th colspan="2" id="nonSpace">Min:</th>
-                        <td colspan="2" id="minData"></td> <!--id="leftLine" css-->
-                    </tr>
-                    <tr>
-                        <th id="nonSpace">Ast</th>
-                        <td id="astData"></td>
-                        <th id="nonSpace">Stl</th>
-                        <td id="stlData"></td>
-                        <th id="blankSpaceBottom"></th>
-                        <th id="nonSpace">FG_M</th>
-                        <td id="fgmData"></td>
-                        <th id="nonSpace">FT_M</th>
-                        <td id="ftmData"></td>
-                        <th id="blankSpaceBottom"></th>
-                        <th id="nonSpace">3PT_M</th>
-                        <td id="threeptmData"></td>
-                        <th id="nonSpace">Rebounds_Off</th>
-                        <td id="reboundsoffData"></td>
-                    </tr>
-                    <tr>
-                        <th id="nonSpace">TO</th>
-                        <td id="toData"></td>
-                        <th id="nonSpace">Blk</th>
-                        <td id="blkData"></td>
-                        <th id="blankSpaceBottom"></th>
-                        <th id="nonSpace">FG_A</th>
-                        <td id="fgaData"></td>
-                        <th id="nonSpace">FT_A</th>
-                        <td id="ftaData"></td>
-                        <th id="blankSpaceBottom"></th>
-                        <th id="nonSpace">3PT_A</th>
-                        <td id="threeptaData"></td>
-                        <th id="nonSpace">Rebounds_Def</th>
-                        <td id="reboundsdefData"></td>
-                    </tr>
-                    <tr>
-                        <th id="nonSpace">PPG</th>
-                        <td id="ppgData"></td> <!--id="last" css--> 
-                        <th id="nonSpace">PF</th>
-                        <td id="pfData"></td>
-                        <th id="lastSp"></th>
-                        <th id="nonSpace">FG_Pct</th>
-                        <td id="fgpctData"></td>  <!--id="last" css-->
-                        <th id="nonSpace">FT_Pct</th>
-                        <td id="ftpctData"></td>
-                        <th id="lastSp"></th>
-                        <th id="nonSpace">3PT_Pct</th>
-                        <td id="threeptpctData"></td>  <!--id="last" css-->
-                        <th id="nonSpace">Rebouds_Tot</th>
-                        <td id="reboundstotData"></td>  <!--id="last" css-->
-                    </tr>
-                </table>
-            </div>
-        </div>
+    <div style="float:right" id="tableness">
+        <table class="table table-condensed" border="1" width="44" style="margin-left:5%;float:top;">
+            <h2 id="entirenameData"></h2>
+            <tr>
+                <th colspan="2" id="nonSpace">Team:</th>
+                <td colspan="2" id="teamData"></td>
+                <th id="lastSp"></th>
+                <th colspan="2" id="nonSpace">GP:</th>
+                <td colspan="2" id="gpData"></td> <!--id="leftLine" css-->
+                <th id="lastSp"></th>
+                <th colspan="2" id="nonSpace">Min:</th>
+                <td colspan="2" id="minData"></td> <!--id="leftLine" css-->
+            </tr>
+            <tr>
+                <th id="nonSpace">Ast</th>
+                <td id="astData"></td>
+                <th id="nonSpace">Stl</th>
+                <td id="stlData"></td>
+                <th id="blankSpaceBottom"></th>
+                <th id="nonSpace">FG_M</th>
+                <td id="fgmData"></td>
+                <th id="nonSpace">FT_M</th>
+                <td id="ftmData"></td>
+                <th id="blankSpaceBottom"></th>
+                <th id="nonSpace">3PT_M</th>
+                <td id="threeptmData"></td>
+                <th id="nonSpace">Rebounds_Off</th>
+                <td id="reboundsoffData"></td>
+            </tr>
+            <tr>
+                <th id="nonSpace">TO</th>
+                <td id="toData"></td>
+                <th id="nonSpace">Blk</th>
+                <td id="blkData"></td>
+                <th id="blankSpaceBottom"></th>
+                <th id="nonSpace">FG_A</th>
+                <td id="fgaData"></td>
+                <th id="nonSpace">FT_A</th>
+                <td id="ftaData"></td>
+                <th id="blankSpaceBottom"></th>
+                <th id="nonSpace">3PT_A</th>
+                <td id="threeptaData"></td>
+                <th id="nonSpace">Rebounds_Def</th>
+                <td id="reboundsdefData"></td>
+            </tr>
+            <tr>
+                <th id="nonSpace">PPG</th>
+                <td id="ppgData"></td> <!--id="last" css--> 
+                <th id="nonSpace">PF</th>
+                <td id="pfData"></td>
+                <th id="lastSp"></th>
+                <th id="nonSpace">FG_Pct</th>
+                <td id="fgpctData"></td>  <!--id="last" css-->
+                <th id="nonSpace">FT_Pct</th>
+                <td id="ftpctData"></td>
+                <th id="lastSp"></th>
+                <th id="nonSpace">3PT_Pct</th>
+                <td id="threeptpctData"></td>  <!--id="last" css-->
+                <th id="nonSpace">Rebouds_Tot</th>
+                <td id="reboundstotData"></td>  <!--id="last" css-->
+            </tr>
+        </table>
     </div>
 
     <script type="text/javascript">

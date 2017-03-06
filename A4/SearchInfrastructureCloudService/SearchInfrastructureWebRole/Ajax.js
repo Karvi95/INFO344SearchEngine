@@ -39,6 +39,7 @@ $(document).ready(function () {
                 //console.log(data[0]);
                 //console.log(typeof(data[0].Team));
                 if (data.length > 0) {
+                    $("#tableness").css('display', 'block');
                     $("#entirenameData").text(data[0].EntireName);
                     $("#teamData").text(data[0].Team);
                     $("#gpData").text(data[0].GP);
@@ -62,44 +63,46 @@ $(document).ready(function () {
                     $("#threeptpctData").text(data[0].ThreePT_Pct);
                     $("#reboundstotData").text(data[0].Rebounds_Tot);
                 } else {
+                    $("#tableness").css('display', 'none');
                     $("#entirenameData").text('');
                     $("td").text('');
                 }
             }
         } else {
+            $("#tableness").css('display', 'none');
             $("#entirenameData").text('');
             $("td").text('');
         }
 
         // Live Search
         // Get Results for PA2
-        $.ajax({
-            type: "POST",
-            url: "SearchQuery.asmx/searchTrie",
-            data: JSON.stringify({ queryValue: query_value }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "JSON",
-            success: function (msg) {
-                var outer = $("<div></div>");
-                $("#jsonDiv").html(outer);
-                if (query_value === "") {
-                    var div = $("<div>").text("");
-                    outer.append(div);
-                } else if (msg.d == "no results found.") {
-                    var div = $("<div>").text("no results found.");
-                    outer.append(div);
-                } else {
-                    var data = JSON.parse(msg.d);
-                    for (var i = 0; i < data.length; i++) {
-                        var div = $("<div>").text(data[i]);
-                        outer.append(div);
-                    }
-                }
-            },
-            error: function (msg) {
-                console.log(msg);
-            }
-        });
+        //$.ajax({
+        //    type: "POST",
+        //    url: "SearchQuery.asmx/searchTrie",
+        //    data: JSON.stringify({ queryValue: query_value }),
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "JSON",
+        //    success: function (msg) {
+        //        var outer = $("<div></div>");
+        //        $("#jsonDiv").html(outer);
+        //        if (query_value === "") {
+        //            var div = $("<div>").text("");
+        //            outer.append(div);
+        //        } else if (msg.d == "no results found.") {
+        //            var div = $("<div>").text("no results found.");
+        //            outer.append(div);
+        //        } else {
+        //            var data = JSON.parse(msg.d);
+        //            for (var i = 0; i < data.length; i++) {
+        //                var div = $("<div>").text(data[i]);
+        //                outer.append(div);
+        //            }
+        //        }
+        //    },
+        //    error: function (msg) {
+        //        console.log(msg);
+        //    }
+        //});
 
         // Live Search
         // Get Results for PA3
@@ -110,8 +113,16 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             dataType: "JSON",
             success: function (msg) {
-                console.log(msg);
+                var jsResultMes = JSON.parse(msg.d);
+                for (var i = 0; i < jsResultMes.length; i++) {
+                    //console.log(i);
+                    //console.log(jsResultMes[i]);
+                    //console.log('SPLITING');
+                    var jsResultMesArray = jsResultMes[i].split("|");
 
+                    console.log(jsResultMesArray);
+                }
+               
 
             },
             error: function (msg) {

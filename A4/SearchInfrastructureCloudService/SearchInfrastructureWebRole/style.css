@@ -1,4 +1,152 @@
-﻿
+﻿@import url(https://fonts.googleapis.com/css?family=Arvo);
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
+
+.container{
+	margin-bottom:4em !important;
+}
+
+#results{
+	margin-top: 4em !important;
+}
+
+#title {
+	text-align: center;	
+	color: #CD594A;
+
+	position: absolute;
+    z-index: 2;
+    left: 3em !important;
+    top: 0.5em !important;
+    right: 5em;
+
+    font-size: 4em;
+	font-family: 'Raleway', sans-serif;
+}	
+
+body {
+	background-color: black;
+}
+
+#divSearch {
+    position: absolute;
+    z-index: 2;
+    left: -40em !important;
+    top: -0.5em !important;
+    right: 5em;
+    height: 50px;
+
+    text-align: center;
+   	margin-right: 6em !important;
+	margin-left: 0.25em !important;
+}
+
+#emptyResults {
+    text-align: center !important;
+    margin-top: 0.01em !important;
+    font-size: 8em !important;
+    color: white !important;    
+}
+
+.form-control {
+	width: 30em;
+	display: inline !important;
+	border: 2px solid #CD594A !important;
+	margin-top: 12em;
+}
+
+#tableness {
+    display: none;
+	margin-top: -20em;
+	margin-right: 18em;
+}
+
+.table-bordered {
+	border: 2px solid #CD594A !important;
+}
+
+#nonSpace {
+	border-bottom: 2px solid #CD594A !important;
+	border-top: 2px solid #CD594A !important;
+	border-left: 2px solid #CD594A !important;
+	color: #CD594A;
+}
+
+th {
+	font-family: Arvo !important;
+}
+
+td {
+	border: 2px solid #CD594A !important;
+	color: white;
+	text-align: right !important;
+	font-family: 'Questrial', sans-serif;
+}
+
+#blankSpaceBottom {
+	border-top:2px solid black !important;
+	border-bottom: 2px solid black !important;
+}
+
+#blankSpaceBottomTop {
+	border-top: 2px black !important;
+	border-bottom: 2px solid black !important;
+}
+
+input::-webkit-input-placeholder {
+color: black !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+color: black !important;  
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+color: black !important;  
+}
+ 
+input:-ms-input-placeholder {  
+color:black !important;  
+}
+
+h2 {
+	color: white;
+	font-family: 'Lato', sans-serif;
+}
+
+#leftLine {
+	text-align: right !important;
+}
+
+#texttosayresults {
+	color: white;
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+}
+
+#lastSp {
+	border-top: 2px solid black !important;
+	border-bottom: 2px solid black !important;
+}
+
+/*PA2*/
+
+#jsonDiv{
+
+}
+.adsbygoogle{
+	margin-top: 10em;
+	margin-bottom: 3em;
+}
+
+.chitikaAdContainer{
+	display:inline-block;
+    margin-top: 5em !important;
+}
+
 #titleForm {
     margin-top: 6em !important;
 }

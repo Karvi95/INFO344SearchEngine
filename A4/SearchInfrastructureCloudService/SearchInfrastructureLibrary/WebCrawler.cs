@@ -165,11 +165,19 @@ namespace SearchInfrastructureLibrary
                     var titleNode = htmlPage.DocumentNode.SelectSingleNode("//head/title");
                     var dateNode = htmlPage.DocumentNode.SelectSingleNode("//meta[@property='og:pubdate']");
 
-                    if (titleNode != null && dateNode != null)
+                    if (titleNode != null)
                     {
                         string pageTitle = titleNode.InnerText;
-                        string pageDate = dateNode.GetAttributeValue("content", String.Empty);
+                        string pageDate;
 
+                        if (dateNode != null)
+                        {
+                            pageDate = dateNode.GetAttributeValue("content", String.Empty);
+                        } else
+                        {
+                            pageDate = DateTime.Now.ToShortDateString();
+                        }
+                         
                         if (pageTitle.Equals("Error"))
                         {
                             HtmlWeb htmlWeb = new HtmlWeb();
