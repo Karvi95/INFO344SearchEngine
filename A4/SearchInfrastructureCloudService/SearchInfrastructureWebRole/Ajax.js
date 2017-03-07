@@ -136,23 +136,5 @@ $(document).ready(function () {
             error: function (msg) {
             }
         });
-
-        //$('body').on("keyup", "input[name='searchterm']", function (e) {
-        //    // Set Timeout
-        //    clearTimeout($.data(this, 'timer'));
-
-        //    // Set Search String
-        //    var search_string = $(this).val();
-
-        //    // Do Search
-        //    if (search_string == '') {
-        //        $("div#results").fadeOut();
-        //        $("h1#texttosayresults").fadeOut();
-        //    } else {
-        //        $("div#results").fadeIn();
-        //        $("h1#texttosayresults").fadeIn();
-        //        $(this).data('timer', setTimeout(search, 100));
-        //    };
-        //});
     }
 });
