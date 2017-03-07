@@ -130,8 +130,6 @@ $(document).ready(function () {
                     outer.append(ref);
                     $("#pa3Results").append(outer);
                 }
-               
-
             },
             error: function (msg) {
             }
