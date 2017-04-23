@@ -1,9 +1,189 @@
 ﻿// Start Ready
 $(document).ready(function () {
 
-    DISPLAYSTATUS();
+    $('#report').click(function () {
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getStatus",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
 
-    function STARTCRAWLING() {
+                var jsStatus = JSON.parse(msg.d);
+
+                //Status
+                $("#status").text(jsStatus);
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getPerformance",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
+
+                var jsPref = JSON.parse(msg.d);
+
+                //CPU
+                $("#cpu").text(jsPref[0]);
+
+                //RAM
+                $("#ram").text(jsPref[1]);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getTotal",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
+
+                var jsTotal = JSON.parse(msg.d);
+
+                //TOTAL
+                $("#total").text(jsTotal);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/sizeQ",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
+
+                var jsQSize = JSON.parse(msg.d);
+
+                //Queue Size
+                $("#qSize").text(jsQSize);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/sizeI",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log(msg.d);
+
+                var jsISize = JSON.parse(msg.d);
+
+                //Index Size
+                $("#iSize").text(jsISize);
+
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/lastTen",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                //console.log("ajaxGetStatus success");
+                //console.log("MESSAGE: " + msg.d);
+                var jsLastTen = JSON.parse(msg.d);
+                //console.log(jsLastTen[0]);
+                var jsLastTenArray = jsLastTen[0].split(" ");
+                //console.log("array: " + jsLastTenArray[0]);
+
+                var string = "#lastten";
+                //Populating List
+                for (var i = 0; i < jsLastTenArray.length; i++) {
+                    string = "#lastten" + i;
+                    console.log(string);
+                    $(string).text(jsLastTenArray[i]);
+                }
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "admin.asmx/getErrors",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                var jsErrorMes = JSON.parse(msg.d);
+                console.log(jsErrorMes[0]);
+                var jsErrorMesArray = jsErrorMes[0].split("||");
+                console.log("array: " + jsErrorMesArray[0]);
+
+                var string = "#errorMes";
+                //Populating Error Message
+                for (var i = 0; i < jsErrorMesArray.length; i++) {
+                    string = "#errorMes" + i;
+                    console.log(string);
+                    $(string).text(jsErrorMesArray[i]);
+                }
+                
+                var jsErrorUrl = JSON.parse(msg.d);
+                console.log(jsErrorUrl[0]);
+                var jsErrorUrlArray = jsErrorUrl[1].split(" ");
+                console.log("array: " + jsErrorUrlArray[1]);
+
+                var string = "#errorUrl";
+                //Populating Error Message
+                for (var i = 0; i < jsErrorUrlArray.length; i++) {
+                    string = "#errorUrl" + i;
+                    console.log(string);
+                    $(string).text(jsErrorUrlArray[i]);
+                }
+            },
+            error: function (msg) {
+                console.log(msg.d);
+                console.log("ajaxGetStatus error");
+            }
+        });
+
+        //DISPLAYSTATUS();
+        //DISPLAYPREF();
+        //DISPLAYTOTAL();
+        //DISPLAYQUEUESIZE();
+        //DISPLAYINDEXSIZE();
+        //DISPLAYLASTTEN();
+        //DISPLAYERRORS();
+    })
+
+    $('#start').click(function () {
         $.ajax({
             type: "POST",
             url: "admin.asmx/startCrawling",
@@ -15,9 +195,9 @@ $(document).ready(function () {
                 console.log("Error when starting to crawl.");
             }
         });
-    }
+    }),
 
-    function STOPCRAWLING() {
+    $('#stop').click(function () {
         $.ajax({
             type: "POST",
             url: "admin.asmx/stopCrawling",
@@ -29,9 +209,9 @@ $(document).ready(function () {
                 console.log("Error when stopping the crawl.");
             }
         });
-    }
+    }),
 
-    function CLEARINDEX() {
+    $('#clear').click(function () {
         $.ajax({
             type: "POST",
             url: "admin.asmx/clearIndex",
@@ -43,9 +223,9 @@ $(document).ready(function () {
                 console.log("Error when clearing index.");
             }
         });
-    }
+    }),
 
-    function URLTOPAGE() {
+    $('#submit').click(function () {
         $("#formValidate").validate({
             rules: {
                 uname: {
@@ -73,63 +253,8 @@ $(document).ready(function () {
                 console.log("Error finding title.");
             }
         });
-    }
-
-    function DISPLAYSTATUS() {
-        $.ajax({
-            type: "GET",
-            url: "admin.asmx/Report",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                console.log("ajaxGetStatus success");
-                console.log(msg.d);
-
-                //Status
-                $("#status").append('<span>' + msg.d[0] + '</span>');
-
-                //CPU
-                $("#cpu").append('<span>' + msg.d[1] + '</span>');
-
-                //RAM
-                $("#ram").append('<span>' + msg.d[2] + '</span>');
-
-                //TOTAL
-                $("#total").append('<span>' + msg.d[3] + '</span>');
-
-                //Queue Size
-                $("#qSize").append('<span>' + msg.d[4] + '</span>');
-
-                //Index Size
-                $("#iSize").append('<span>' + msg.d[5] + '</span>');
-
-                //last Ten
-                var recentUrls = msg.d[6].split(" ");
-                if (recentUrls.length !== 1) {
-                    for (var i = 0; i < 10; i++) {
-                        $("#lastten").append('<li class="collection-item">' + recentUrls[i] + '</li>');
-                    }
-                }
-
-                //Error messages
-                var errorsMes = msg.d[7].split("||");
-                for (var j = 0; j < errorsMes.length;j++) {
-                    $("#errorMes").append('<li class="collection-item">' + errorsMes[j] + '</li>');
-                }
-
-                //Error urls
-                var errorsUrls = msg.d[8].split(" ");
-                for (var k = 0; k < errorsUrls.length; k++) {
-                    $("#errorUrl").append('<li class="collection-item">' + errorsUrls[k] + '</li>');
-                }
-
-            },
-            error: function (msg) {
-                console.log(msg.d);
-                console.log("ajaxGetStatus error");
-            }
-        });
-    }
+    })
 });
+
 
 //$(document).ready(ajaxGetStatus());

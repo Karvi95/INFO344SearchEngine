@@ -144,7 +144,7 @@ namespace CrawlerLibrary
                     {
                         HtmlWeb htmlWeb = new HtmlWeb();
                         Debug.WriteLine("An error occured at: " + urlAsString);
-                        AnError error = new AnError(urlAsString, ex.ToString());
+                        AnError error = new AnError(urlAsString, ex.Message);
                         TableOperation errorOperation = TableOperation.Insert(error);
                         myStorageMaster.GetErrorsTable().Execute(errorOperation);
                     }
@@ -221,7 +221,7 @@ namespace CrawlerLibrary
                             {
                                 HtmlWeb htmlWeb = new HtmlWeb();
                                 Debug.WriteLine("An error occured at: " + aURL);
-                                AnError error = new AnError(aURL, ex.ToString());
+                                AnError error = new AnError(aURL, ex.Message);
                                 TableOperation errorOperation = TableOperation.Insert(error);
                                 myStorageMaster.GetErrorsTable().Execute(errorOperation);
                             }
@@ -267,7 +267,7 @@ namespace CrawlerLibrary
                                         {
                                             HtmlWeb htmlWeb = new HtmlWeb();
                                             Debug.WriteLine("An error occured at: " + aURL);
-                                            AnError error = new AnError(aURL, ex.ToString());
+                                            AnError error = new AnError(aURL, ex.Message);
                                             TableOperation errorOperation = TableOperation.Insert(error);
                                             myStorageMaster.GetErrorsTable().Execute(errorOperation);
                                         }
@@ -278,7 +278,7 @@ namespace CrawlerLibrary
                             {
                                 HtmlWeb htmlWeb = new HtmlWeb();
                                 Debug.WriteLine("An error occured at: " + aURL);
-                                AnError error = new AnError(aURL, ex.ToString());
+                                AnError error = new AnError(aURL, ex.Message);
                                 TableOperation errorOperation = TableOperation.Insert(error);
                                 myStorageMaster.GetErrorsTable().Execute(errorOperation);
                             }
@@ -289,7 +289,7 @@ namespace CrawlerLibrary
                 {
                     HtmlWeb htmlWeb = new HtmlWeb();
                     Debug.WriteLine("An error occured at: " + aURL);
-                    AnError error = new AnError(aURL, ex.ToString());
+                    AnError error = new AnError(aURL, ex.Message);
                     TableOperation errorOperation = TableOperation.Insert(error);
                     myStorageMaster.GetErrorsTable().Execute(errorOperation);
                 }

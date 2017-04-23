@@ -1,2 +1,2 @@
-- "URL to your Azure instance hosting this website": http://a2info344.cloudapp.net/dashboard.html
-- "URL to your github repro": https://github.com/Karvi95/INFO344SearchEngine
+- "URL to your Azure instance hosting this website": http://kriarvi.cloudapp.net/dashboard.html
+- "URL to your github repro": https://github.com/Karvi95/INFO344SearchEngine/tree/readyforPA4

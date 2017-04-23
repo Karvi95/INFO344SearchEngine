@@ -1,0 +1,5 @@
+---Prety and Cool UI---
+I tried to make the UI look nice.
+
+---Ajax Search---
+Because I am searching through an Object's public method, I had to modify this tutorial: http://ninetofive.me/blog/build-a-live-search-with-ajax-php-and-mysql , slightly by adding a DbHandler.php; it is there that a new Db Object is created and search is called on user input passed in through stardard JQuery syntax's ajax method: setting type to "POST", the url to be the new "DbHandler.php", the data to be value of the trimmed user input, the dataType: to be "HTML", etc.. On succuess, the data is passed to an .html() function when the div named "results" is selected. This search executes on keyup of the input named "searchterm" and fades out after 100 seconds so on some browsers there may be some latency. But the effect looked interesting primarily because I had never worked with a time-delay so I included it. I had to move my code to echo the table from underneath my form to the DBHandler.php. This was from PA1.

@@ -23,42 +23,71 @@
     <div class="container">
         <h1 class="center-align">CNN Crawler Admin Dashboard</h1>
 
+        <button class="waves-effect waves-light btn" id="report">REFRESH</button>
+
         <div class="row">
             <div class="col s4">
-                <h3 id="status">Status:</h3>
+                <h3>Status: <span id="status"></span></h3>
             </div>
             <div class="col s6">
-                <h3 id="cpu">CPU Utilization %:</h3>
+                <h3>CPU Utilization %: <span id="cpu"></span></h3>
             </div>
             <div class="col s6">
-                <h3 id="ram">RAM Available:</h3>
+                <h3>RAM Available: <span id="ram"></span></h3>
             </div>
         </div>
 
         <div class="row">
-            <div class="col s12"> <h4 id="total">Number of URLs Crawled: </h4> </div>
-            <div class="col s6"> <h4 id="qSize">Size of Queue:</h4> </div>
-            <div class="col s6"> <h4 id="iSize">Size of Index:</h4> </div>
+            <div class="col s12"> <h4>Number of URLs Crawled: <span id="total"></span></h4> </div>
+            <div class="col s6"> <h4>Size of Queue: <span id="qSize"></span></h4> </div>
+            <div class="col s6"> <h4>Size of Index: <span id="iSize"></span></h4> </div>
         </div>
 
         <div class="row">
             <div class="col s6"> <h3>Last 10 Urls Crawled:</h3> </div>
-            <ul class="collection" id="lastten">
-                <!--<li class="collection-item"></li>-->
+            <ul class="collection">
+                <li class="collection-item" id="lastten0"></li>
+                <li class="collection-item" id="lastten1"></li>
+                <li class="collection-item" id="lastten2"></li>
+                <li class="collection-item" id="lastten3"></li>
+                <li class="collection-item" id="lastten4"></li>
+                <li class="collection-item" id="lastten5"></li>
+                <li class="collection-item" id="lastten6"></li>
+                <li class="collection-item" id="lastten7"></li>
+                <li class="collection-item" id="lastten8"></li>
+                <li class="collection-item" id="lastten9"></li>
             </ul>
 
             <div class="col s3">
                 <h3>Error:</h3>
-                <ul class="collection" id="errorMes">
-                    <!--<li class="collection-item"></li>-->
+                <ul class="collection">
+                    <li class="collection-item" id="errorMes0"></li>
+                    <li class="collection-item" id="errorMes1"></li>
+                    <li class="collection-item" id="errorMes2"></li>
+                    <li class="collection-item" id="errorMes3"></li>
+                    <li class="collection-item" id="errorMes4"></li>
+                    <li class="collection-item" id="errorMes5"></li>
+                    <li class="collection-item" id="errorMes6"></li>
+                    <li class="collection-item" id="errorMes7"></li>
+                    <li class="collection-item" id="errorMes8"></li>
+                    <li class="collection-item" id="errorMes9"></li>
                 </ul>
             </div>
 
 
             <div class="col s3">
                 <h3>@ Url:</h3>
-                <ul class="collection" id="errorUrl">
-                    <!--<li class="collection-item"></li>-->
+                <ul class="collection">
+                    <li class="collection-item" id="errorUrl0"></li>
+                    <li class="collection-item" id="errorUrl1"></li>
+                    <li class="collection-item" id="errorUrl2"></li>
+                    <li class="collection-item" id="errorUrl3"></li>
+                    <li class="collection-item" id="errorUrl4"></li>
+                    <li class="collection-item" id="errorUrl5"></li>
+                    <li class="collection-item" id="errorUrl6"></li>
+                    <li class="collection-item" id="errorUrl7"></li>
+                    <li class="collection-item" id="errorUrl8"></li>
+                    <li class="collection-item" id="errorUrl9"></li>
                 </ul>
             </div>
         </div>
@@ -66,22 +95,19 @@
         <h5>Control the above Information with these: </h5>
 
         <div class="row">
-            <button class="waves-effect waves-light btn" id="stop" onclick="STARTCRAWLING()">START CRAWLING</button>
-            <button class="waves-effect waves-light btn" id="clear" onclick="STOPCRAWLING()">STOP CRAWLING</button>
-            <button class="waves-effect waves-light btn" id="start" onclick="CLEARINDEX()">CLEAR ALL</button>
+            <button class="waves-effect waves-light btn" id="start">START CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="stop">STOP CRAWLING</button>
+            <button class="waves-effect waves-light btn" id="clear">CLEAR ALL</button>
         </div>
 
         <div class="row">
             <div class="col s12">
                 Search a URL:
-                <form class="col s12" onsubmit="URLTOPAGE()">
                     <div class="input-field inline">
                         <input id="textbox" type="text" class="validate" required>
                         <label for="textbox" data-error="wrong" data-success="right"></label>
+                        <button class="waves-effect waves-light btn" id="submit">SUBMIT</button>
                     </div>
-                </form>
-                
-
                 <div id="titleSearchResult"></div>
             </div>
         </div>

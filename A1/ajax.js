@@ -12,7 +12,7 @@ $(document).ready(function() {
 		var query_value = $("input[name='searchterm']").val().trim();
 		if(query_value !== '') {
 			$.ajax({
-				type: "POST",
+				type: "GET",
 				url: "DbHandler.php",
 				data: { query: query_value },
 				dataType: "HTML",

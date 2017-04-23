@@ -1,0 +1,271 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Arvo);
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,700');
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
+/*PA1*/
+
+.container{
+	margin-bottom:4em !important;
+}
+
+#results{
+	margin-top: 4em !important;
+}
+
+#title {
+	text-align: center;	
+	color: #CD594A;
+
+	position: absolute;
+    z-index: 2;
+    left: 3em !important;
+    top: 0.5em !important;
+    right: 5em;
+
+    font-size: 4em;
+	font-family: 'Raleway', sans-serif;
+}	
+
+body {
+	background-color: white;
+}
+
+#divSearch {
+    position: absolute;
+    z-index: 2;
+    left: -40em !important;
+    top: -0.5em !important;
+    right: 5em;
+    height: 50px;
+
+    text-align: center;
+   	margin-right: 6em !important;
+	margin-left: 0.25em !important;
+}
+
+#emptyResults {
+    text-align: center !important;
+    margin-top: 0.01em !important;
+    font-size: 8em !important;
+    color: white !important;    
+}
+
+.form-control {
+	width: 30em;
+	display: inline !important;
+	border: 2px solid #CD594A !important;
+	margin-top: 12em;
+}
+
+#tableness {
+    display: none;
+	margin-top: 5em;
+	margin-right: 39em;
+	position: relative;
+}
+
+.table-bordered {
+	border: 2px solid #CD594A !important;
+}
+
+#nonSpace {
+	border-bottom: 2px solid #CD594A !important;
+	border-top: 2px solid #CD594A !important;
+	border-left: 2px solid #CD594A !important;
+	color: #CD594A;
+}
+
+th {
+	font-family: Arvo !important;
+}
+
+td {
+	border: 2px solid #CD594A !important;
+	color: black;
+	text-align: right !important;
+	font-family: 'Questrial', sans-serif;
+}
+
+#blankSpaceBottom {
+	border-top:2px solid white !important;
+	border-bottom: 2px solid white !important;
+}
+
+#blankSpaceBottomTop {
+	border-top: 2px white !important;
+	border-bottom: 2px solid white !important;
+}
+
+input::-webkit-input-placeholder {
+color: black !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+color: black !important;  
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+color: black !important;  
+}
+ 
+input:-ms-input-placeholder {  
+color:black !important;  
+}
+
+h2 {
+	color: black;
+	font-family: 'Lato', sans-serif;
+}
+
+#leftLine {
+	text-align: right !important;
+}
+
+#texttosayresults {
+	color: black;
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+}
+
+#lastSp {
+	border-top: 2px solid white !important;
+	border-bottom: 2px solid white !important;
+}
+
+#entirenameData {
+	color: #54E91E;
+}
+
+/*PA2*/
+
+#jsonDiv{
+    display: none;
+	margin-top: 0.5em;
+    margin-left: 27.9em;
+    margin-bottom: -2em !important;
+    
+    border: 1px solid #CD594A;
+    padding-left: -2em;; 
+
+    width: 38em !important;
+    
+}
+
+
+.adsbygoogle{
+	margin-top: 50em;
+	margin-left: 8em;
+	margin-bottom: 3em;
+}
+
+#moveaddsup {
+	margin-top: -5em;
+	margin-left: 58em;
+	position:absolute;
+}
+
+.chitikaAdContainer{
+    margin-top: 5em !important;
+}
+
+#titleForm {
+    margin-top: 6em !important;
+}
+
+#Subheading{
+	padding-top: -2em;
+	padding-left: 34em;
+	font-size: 1em;
+	font-family: Space Mono;
+}
+
+#textbox {
+    width: 38em;
+    margin-top: 3em;
+    margin-left: 28em;
+}
+
+.form-control {
+	display: inline-block !important;
+}
+
+#submitButton {
+	margin-left: 1em;
+}
+
+#logo {
+	height: 17em;
+	margin-top: 2em;
+	margin-left: 35em;
+	margin-right: 35em;
+
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+#parodyHeader{
+	padding-top: 5em;
+	padding-left: 30em;
+	margin-bottom: -9em;
+}
+
+.orangify {
+	fill: #54E91E;
+}
+
+.firstPart{
+	color: #54E91E;
+	display:inline-block;
+	font-family: Space Mono
+}
+
+.secondPart{
+	display: inline-block;
+	font-size: 2em !important;
+	font-family: Space Mono
+}
+
+.pa2suggestDiv{
+    color: black !important;
+    font-family: Raleway;
+}
+
+.pa2suggestDiv:hover{
+    background-color: #54E91E !important;
+}
+
+/*PA3*/
+
+#pa3Results{
+	margin-top: 23em;
+	margin-left: -7em;
+}
+
+.pa3resultDiv {
+	margin-left: 15em !important;
+	height: 4em !important;
+    margin-bottom: 2em !important;       
+
+    border: 2px solid #CD594A;
+    padding: 10px 10px; 
+
+    width: 50em !important;
+    border-radius: 18px 40px;
+}
+
+.pa3resultA {
+	color: black;
+	font-size: 1.3em !important;
+	text-decoration: none !important;
+	font-family: Raleway;
+}
+
+.pa3resultA:hover {
+	color: #54E91E !important;
+}
